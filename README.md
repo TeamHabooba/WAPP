@@ -17,8 +17,8 @@ L-2 Group 30
 > Leon Frank Aminiel
 - #### TP000001
 > Colin Subira Baluch
-- #### TP000002
-> Shun ?
+- #### TP076126
+> Shunto Matsumoto
 
 ## Task Division
 
@@ -31,7 +31,7 @@ All requirements for implementations are mentioned ....
  - [Alex](#tp081705)  
  - [Leo](#tp082557)   
  - [Colin](#tp000001)   
- - [Shun](#tp000002)   
+ - [Shun](#tp076126)   
 
 *No Task Assigned* -  *---*
 
