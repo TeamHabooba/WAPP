@@ -15,8 +15,8 @@ L-2 Group 30
 > Kurapatkin Aliaksandr  
 - #### TP082557  
 > Leon Frank Aminiel
-- #### TP000001
-> Colin Subira Baluch
+- #### TP084561
+> Colin Subira Kwilabya
 - #### TP076126
 > Shunto Matsumoto
 
@@ -30,7 +30,7 @@ All requirements for implementations are mentioned ....
 ### Assignees
  - [Alex](#tp081705)  
  - [Leo](#tp082557)   
- - [Colin](#tp000001)   
+ - [Colin](#tp084561)   
  - [Shun](#tp076126)   
 
 *No Task Assigned* -  *---*
