@@ -1,5 +1,7 @@
 # WAPP
-Web Applications Assignment
+Web Applications Assignment (CT050-3-2-WAPP)  
+(Group Assignment)  
+50% of Semester Evaluation  
 L-2 Group 30
 
 ## Contents
@@ -11,65 +13,155 @@ L-2 Group 30
 - [Q&A](#q--a)
 
 ## Team Members
-- #### TP081705
-> Kurapatkin Aliaksandr  
-- #### TP082557  
-> Leon Frank Aminiel
-- #### TP084561
-> Colin Subira Kwilabya
-- #### TP076126
-> Shunto Matsumoto
+| Student ID | Name |
+|---|---|
+| TP081705 | Kurapatkin Aliaksandr |
+| TP082557 | Leon Frank Aminiel |
+| TP084561 | Colin Subira Kwilabya |
+| TP076126 | Shunto Matsumoto |
+
+## Project Overview
+
+This project implements a **Web-based Learning System** — a platform for registered and
+non-registered users to discover and access digital learning resources.
+The system is built with **.NET 8 / Blazor Server**, backed by a local **SQL Server** database.
+
+The platform covers:
+- Publicly accessible content for non-registered visitors.
+- A **Member module** (registration + login required) for managing personal learning activities.
+- An **Admin module** (login required) for managing website content and the database.
 
 ## Task Division
 
 ### Explanation
-This assignment would be completed in subgroups (?).  
+Each member is individually assessed on their own implemented pages and features
+(see the marking rubric in [doc/AssignmentTask.pdf](./doc/AssignmentTask.pdf)).
+Task boundaries follow the three main feature areas of the site.
 
-All requirements for implementations are mentioned ....
+### Modules
 
-### Assignees
- - [Alex](#tp081705)  
- - [Leo](#tp082557)   
- - [Colin](#tp084561)   
- - [Shun](#tp076126)   
+| Module | Assignee | Key Responsibility |
+|---|---|---|
+| Web Page Layout & Appearance + Navigation | Alex (TP081705) | Overall UI, CSS, Blazor layouts, routing |
+| User Authentication & Authorization + Registration | Leo (TP082557) | Login, registration, role-based access |
+| Dynamic Content + Member Module | Colin (TP084561) | Member dashboard, interactive features |
+| CRUD operations + Admin Module | Shun (TP076126) | Admin panel, insert/update/delete records |
 
-*No Task Assigned* -  *---*
+A detailed set of requirements per module is described in [doc/code-reqs.md](doc/code-reqs.md).
 
+### Module Summaries
+
+**Web Page Layout & Appearance** — Defines the global Blazor layout components, applies CSS
+(external, internal, and inline where appropriate), ensures a consistent visual theme across all pages,
+and implements the navigation structure.
+
+**User Authentication & Authorization** — Implements the registration page for new members,
+login/logout flow, and role-based route guarding for Member and Admin areas.
+
+**Dynamic Content (Member Module)** — Delivers interactive learning resource pages accessible
+to logged-in members: activity listings, self-assessments, and personal progress tracking.
+
+**CRUD Operations (Admin Module)** — Provides the admin-only section for managing site content
+and the database: creating, displaying, editing, and deleting records with proper form validation.
 
 ## Assignment Question
-All the parts of this project are created following the initial assignment question. The exact PDF-document may be opened with [this link](./doc/Assignment.pdf) 
+The full assignment PDF can be opened via [this link](./doc/AssignmentTask.pdf).
 
+## Requirements
+All [functional](doc/code-reqs.md#functional) and [non-functional](doc/code-reqs.md#non-functional)
+project requirements are documented in [doc/code-reqs.md](doc/code-reqs.md).
+
+Key constraints from the assignment:
+- Built with **.NET technology** — Group 30 uses **Blazor Server (.NET 8)**.
+- Must include interlinked pages, HTML5, CSS (external/internal/inline), and multimedia.
+- Full CRUD database operations (insert, display, update, delete).
+- Registration page, member module, and admin module — all login-protected where required.
+- Form validation and logical navigation are mandatory.
+- A local database is required (Group 30 uses SQL Server / LocalDB).
+
+## Submission
+
+- **Proposal Report deadline:** Week 7 via Moodle.
+- **Final submission:** Complete website + Final Report via Moodle (exact deadline TBD by supervisor).
+- **File format:** Submit as instructed on Moodle (website source + report document).
+
+ZIP naming format (for reference only):  
+`G30_TP081705_TP082557_TP084561_TP076126.zip`
 
 ## Guidelines for Team Members
 > [!TIP]
-> If it appears that after reading all the `.md` guidelines and [Q&A Section](#q--a) you
-still have any questions, please follow this order to make
-a research on the topic:
-> 1. ChatGPT/DeepSeek/Grok/Claude
-(Be aware of coding mistakes if not context-pretrained)
-> 2. Perplexity + Google 
+> If after reading all `.md` guidelines and the [Q&A](#q--a) section you still have questions,
+> research in this order:
+> 1. ChatGPT / DeepSeek / Grok / Claude *(be aware of potential coding mistakes if not context-pretrained)*
+> 2. Perplexity + Google
 > 3. YouTube
 > 4. Reddit
-> 5. StackOverflow
-(Actually the best one if u know how to find what you need.
-So you can try it even before any GPT.
-Or set GPT to "search"/"web" and ask it
-to give the references from this website.)
+> 5. StackOverflow *(highly effective if you know how to search; also try GPT with web/search mode pointing to SO)*
 > 6. Group Leader
 
-### Toolchain/Framework
+For contribution rules, branching, code style, and other organizational guidelines — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
+### Toolchain / Framework
+| Tool | Choice |
+|---|---|
+| Language | C# 12 |
+| Framework | .NET 8 — Blazor Server |
+| UI components | Blazor built-ins + custom CSS |
+| Target platform | Windows 10/11 |
+| IDE | Any IDE that supports .NET |
+| IDE (recommended) | JetBrains Rider or Visual Studio 2022 Community |
+| Database | SQL Server / LocalDB |
+| ORM | Entity Framework Core 8 |
+| Version control | Git + GitHub (no CI pipeline) |
+| Unit Testing | Not required |
 
 ### Style and Naming Conventions
-The exact guidelines and coding style requirements can be found [here](./doc/code-style.md).
+Microsoft C# Coding Conventions with project-specific extensions.  
+Full guidelines: [doc/code-style.md](./doc/code-style.md)
 
 ### Documentation
-Documentation might be implemented in 2 ways:
-1. Create your own `.md` file in `doc` directory. No formatting required.
-2. Write comments on each entity: classes, methods, fields, constants.
+Documentation can be done in either or both of the following ways:
+1. Create a `.md` file in the `doc/` directory (no strict formatting required).
+2. Write XML doc comments on each entity: classes, components, methods, properties.
 
-You can pick one or do both.  
-Check [this](./doc/code-style.md#comments) to understand what exactly do you need to mention in documentation.
+See [doc/code-style.md#comments](./doc/code-style.md#comments) for what must be mentioned.
 
 ## Q & A
-Here would be stated all the unclear requirements and all other questions related to this assignment. Together with supervisor's answers.
+
+### Q1
+> What .NET technology stack should we use?
+
+**Answer:** The assignment requires .NET technology. Group 30 uses **Blazor Server on .NET 8**.
+No WebForms.
+
+### Q2
+> Can we use a CSS framework (Bootstrap, Tailwind, etc.)?
+
+**Answer:** *(Pending supervisor clarification)*
+
+### Q3
+> What database engine should we use?
+
+**Answer:** The assignment requires a local database. Group 30 uses **SQL Server / LocalDB** via
+**Entity Framework Core**.
+
+### Q4
+> Are unit tests required or do they count as creativity?
+
+**Answer:** Unit tests are not required and do not give additional marks.
+
+### Q5
+> Does "dynamic content" mean we must use JavaScript, or is Blazor's C# interactivity sufficient?
+
+**Answer:** *(Pending supervisor clarification)*
+
+### Q6
+> Do all four members need separate login-protected modules, or are Member and Admin enough?
+
+**Answer:** The assignment specifies at minimum a Member module and an Admin module.
+Individual marks are assessed per the rubric criteria, not per separate modules.
+
+### Q7
+> Is the usage of a third-party component library (e.g., MudBlazor) permitted?
+
+**Answer:** *(Pending supervisor clarification)*
