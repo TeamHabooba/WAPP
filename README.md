@@ -1,7 +1,7 @@
 # WAPP
 Web Applications Assignment (CT050-3-2-WAPP)  
 (Group Assignment)  
-50% of Semester Evaluation  
+100% of Semester Evaluation  
 L-2 Group 30
 
 ## Contents
@@ -81,7 +81,7 @@ Key constraints from the assignment:
 
 ## Submission
 
-- **Proposal Report deadline:** Week 7 via Moodle.
+- **Proposal Report deadline:** Week 7 via Moodle. **Submitted**
 - **Final submission:** Complete website + Final Report via Moodle (exact deadline TBD by supervisor).
 - **File format:** Submit as instructed on Moodle (website source + report document).
 
@@ -109,11 +109,11 @@ For contribution rules, branching, code style, and other organizational guidelin
 | UI components | Blazor built-ins + custom CSS |
 | Target platform | Windows 10/11 |
 | IDE | Any IDE that supports .NET |
-| IDE (recommended) | JetBrains Rider or Visual Studio 2022 Community |
+| IDE (recommended) | Visual Studio 2022 Community |
 | Database | SQL Server / LocalDB |
 | ORM | Entity Framework Core 8 |
 | Version control | Git + GitHub (no CI pipeline) |
-| Unit Testing | Not required |
+| Unit Testing | *(Pending supervisor clarification)* |
 
 ### Style and Naming Conventions
 Microsoft C# Coding Conventions with project-specific extensions.  
