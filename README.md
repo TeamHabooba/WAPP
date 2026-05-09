@@ -131,8 +131,7 @@ See [doc/code-style.md#comments](./doc/code-style.md#comments) for what must be 
 ### Q1
 > What .NET technology stack should we use?
 
-**Answer:** The assignment requires .NET technology. Group 30 uses **Blazor Server on .NET 8**.
-No WebForms.
+**Answer:** The assignment requires any .NET C# technology. Group 30 will use Blazor Server (.NET 8).
 
 ### Q2
 > Can we use a CSS framework (Bootstrap, Tailwind, etc.)?
@@ -148,7 +147,7 @@ No WebForms.
 ### Q4
 > Are unit tests required or do they count as creativity?
 
-**Answer:** Unit tests are not required and do not give additional marks.
+**Answer:** *(Pending supervisor clarification)*
 
 ### Q5
 > Does "dynamic content" mean we must use JavaScript, or is Blazor's C# interactivity sufficient?
@@ -158,8 +157,7 @@ No WebForms.
 ### Q6
 > Do all four members need separate login-protected modules, or are Member and Admin enough?
 
-**Answer:** The assignment specifies at minimum a Member module and an Admin module.
-Individual marks are assessed per the rubric criteria, not per separate modules.
+**Answer:** *(Pending supervisor clarification)*
 
 ### Q7
 > Is the usage of a third-party component library (e.g., MudBlazor) permitted?
