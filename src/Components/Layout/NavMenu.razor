@@ -1,0 +1,64 @@
+@* NavMenu.razor — persistent top navigation bar for PwnLearn *@
+@inject AuthSession Auth
+@inject NavigationManager Nav
+@implements IDisposable
+
+<nav class="navbar">
+    <a href="/" class="navbar__brand">
+        <span class="navbar__logo">🔐</span>
+        <span class="navbar__name">PwnLearn</span>
+    </a>
+
+    <button class="navbar__toggle" @onclick="ToggleMenu" aria-label="Toggle navigation">☰</button>
+
+    <ul class="navbar__links @(_menuOpen ? "open" : "")">
+        <li><NavLink href="/" Match="NavLinkMatch.All" ActiveClass="nav-active">Home</NavLink></li>
+        <li><NavLink href="/courses" ActiveClass="nav-active">Courses</NavLink></li>
+        <li><NavLink href="/about" ActiveClass="nav-active">About</NavLink></li>
+
+        @if (Auth.IsAuthenticated)
+        {
+            @if (Auth.IsMember)
+            {
+                <li><NavLink href="/member/dashboard" ActiveClass="nav-active">Dashboard</NavLink></li>
+            }
+            @if (Auth.IsAdmin)
+            {
+                <li><NavLink href="/admin" ActiveClass="nav-active">Admin</NavLink></li>
+            }
+            <li>
+                <button class="btn-nav-logout" @onclick="HandleLogout">
+                    Logout (@Auth.CurrentUser!.Name)
+                </button>
+            </li>
+        }
+        else
+        {
+            <li><NavLink href="/auth/login" ActiveClass="nav-active">Login</NavLink></li>
+            <li><NavLink href="/auth/register" class="btn-primary btn-nav" ActiveClass="nav-active">Register</NavLink></li>
+        }
+    </ul>
+</nav>
+
+@code {
+    private bool _menuOpen;
+
+    protected override void OnInitialized()
+    {
+        // Re-render NavMenu whenever auth state changes
+        Auth.OnChange += StateHasChanged;
+    }
+
+    private void ToggleMenu() => _menuOpen = !_menuOpen;
+
+    private void HandleLogout()
+    {
+        Auth.Logout();
+        Nav.NavigateTo("/");
+    }
+
+    public void Dispose()
+    {
+        Auth.OnChange -= StateHasChanged;
+    }
+}
