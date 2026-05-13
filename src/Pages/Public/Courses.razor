@@ -1,0 +1,79 @@
+@* Courses.razor — public course catalogue *@
+@page "/courses"
+@inject ICourseService CourseService
+@inject AuthSession Auth
+@inject NavigationManager Nav
+
+<PageTitle>Courses — PwnLearn</PageTitle>
+
+<div class="page-container">
+    <header class="page-header">
+        <h1>Course Catalogue</h1>
+        <p class="page-subtitle">Structured cybersecurity learning — from fundamentals to advanced toolchains.</p>
+    </header>
+
+    @* Filter bar *@
+    <div class="filter-bar">
+        <input class="search-input" type="search" placeholder="Search courses…"
+               @bind="_search" @bind:event="oninput" aria-label="Search courses" />
+        <select class="search-input filter-select" @bind="_filterCategory" aria-label="Filter by category">
+            <option value="">All Categories</option>
+            <option value="Fundamentals">Fundamentals</option>
+            <option value="Tools">Tools</option>
+            <option value="CTF">CTF</option>
+        </select>
+        <select class="search-input filter-select" @bind="_filterDifficulty" aria-label="Filter by difficulty">
+            <option value="">All Levels</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+        </select>
+    </div>
+
+    @if (_courses is null)
+    {
+        <LoadingSpinner />
+    }
+    else if (Filtered.Count == 0)
+    {
+        <p class="status-msg">No courses match your filters.</p>
+    }
+    else
+    {
+        <div class="courses-grid">
+            @foreach (var course in Filtered)
+            {
+                <CourseCard Course="course"
+                            ActionLabel="@(Auth.IsAuthenticated ? "Open Course" : "Preview")"
+                            OnActionClick="@(() => NavigateToCourse(course.Id))" />
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private List<Course>? _courses;
+    private string _search = string.Empty;
+    private string _filterCategory = string.Empty;
+    private string _filterDifficulty = string.Empty;
+
+    private List<Course> Filtered => (_courses ?? new())
+        .Where(c =>
+            (string.IsNullOrWhiteSpace(_search) || c.Title.Contains(_search, StringComparison.OrdinalIgnoreCase) || c.Description.Contains(_search, StringComparison.OrdinalIgnoreCase)) &&
+            (string.IsNullOrWhiteSpace(_filterCategory) || c.Category == _filterCategory) &&
+            (string.IsNullOrWhiteSpace(_filterDifficulty) || c.Difficulty == _filterDifficulty))
+        .ToList();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _courses = await CourseService.GetAllPublishedAsync();
+    }
+
+    private void NavigateToCourse(int id)
+    {
+        if (Auth.IsAuthenticated)
+            Nav.NavigateTo($"/member/course/{id}");
+        else
+            Nav.NavigateTo($"/courses/{id}");
+    }
+}

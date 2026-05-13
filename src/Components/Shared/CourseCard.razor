@@ -1,0 +1,33 @@
+@* CourseCard.razor — reusable card for displaying a course in listings *@
+
+<article class="course-card" style="--card-accent: @AccentColor;">
+    <div class="course-card__icon">@Course.IconEmoji</div>
+    <div class="course-card__body">
+        <span class="badge badge-@Course.Difficulty.ToLower()">@Course.Difficulty</span>
+        <span class="badge badge-category">@Course.Category</span>
+        <h3 class="course-card__title">@Course.Title</h3>
+        <p class="course-card__desc">@Course.Description</p>
+    </div>
+    <div class="course-card__footer">
+        <span class="course-card__modules">@Course.Modules.Count module@(Course.Modules.Count == 1 ? "" : "s")</span>
+        @if (ShowAction)
+        {
+            <button class="btn-primary btn-sm" @onclick="OnActionClick">@ActionLabel</button>
+        }
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired] public Course Course { get; set; } = default!;
+    [Parameter] public bool ShowAction { get; set; } = true;
+    [Parameter] public string ActionLabel { get; set; } = "View Course";
+    [Parameter] public EventCallback OnActionClick { get; set; }
+
+    // Derived accent colour per difficulty
+    private string AccentColor => Course.Difficulty switch
+    {
+        "Intermediate" => "var(--warning)",
+        "Advanced"     => "var(--danger)",
+        _              => "var(--accent)"
+    };
+}

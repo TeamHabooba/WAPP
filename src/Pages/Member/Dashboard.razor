@@ -1,0 +1,102 @@
+@* Dashboard.razor — member learning dashboard *@
+@page "/member/dashboard"
+
+<PageTitle>Dashboard — PwnLearn</PageTitle>
+
+<div class="page-container">
+    @if (!Auth.IsAuthenticated)
+    {
+        @* Guard — redirect happens in code-behind OnInitialized *@
+        <LoadingSpinner Label="Redirecting…" />
+    }
+    else
+    {
+        <header class="page-header">
+            <div>
+                <h1>Welcome back, @Auth.CurrentUser!.Name 👋</h1>
+                <p class="page-subtitle">Track your learning progress and pick up where you left off.</p>
+            </div>
+        </header>
+
+        @* Stats row *@
+        <div class="stats-row">
+            <StatCard Icon="📚" Value="@_enrollments.Count.ToString()" Label="Enrolled Courses" />
+            <StatCard Icon="✅" Value="@_totalCompleted.ToString()" Label="Modules Completed" />
+            <StatCard Icon="🧠" Value="@_quizAttempts.Count.ToString()" Label="Quiz Attempts" />
+            <StatCard Icon="🏆" Value="@_bestScore" Label="Best Quiz Score" />
+        </div>
+
+        @* My courses *@
+        <section class="section">
+            <div class="section-header">
+                <h2>My Courses</h2>
+                <a href="/courses" class="link-muted">Browse more →</a>
+            </div>
+
+            @if (_isLoading)
+            {
+                <LoadingSpinner />
+            }
+            else if (_enrollments.Count == 0)
+            {
+                <div class="empty-state">
+                    <p>You haven't enrolled in any courses yet.</p>
+                    <a href="/courses" class="btn-primary">Browse Courses</a>
+                </div>
+            }
+            else
+            {
+                <div class="enrollment-list">
+                    @foreach (var enr in _enrollments)
+                    {
+                        var totalModules = enr.Course.Modules.Count;
+                        var pct = totalModules > 0 ? (int)((double)enr.CompletedModules / totalModules * 100) : 0;
+                        <div class="enrollment-card">
+                            <div class="enrollment-card__icon">@enr.Course.IconEmoji</div>
+                            <div class="enrollment-card__body">
+                                <h3>@enr.Course.Title</h3>
+                                <div class="progress-bar" role="progressbar"
+                                     aria-valuenow="@pct" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="progress-bar__fill" style="width: @pct%"></div>
+                                </div>
+                                <small>@enr.CompletedModules / @totalModules modules completed (@pct%)</small>
+                            </div>
+                            <a href="/member/course/@enr.CourseId" class="btn-secondary btn-sm">Continue</a>
+                        </div>
+                    }
+                </div>
+            }
+        </section>
+
+        @* Recent quiz attempts *@
+        @if (_quizAttempts.Count > 0)
+        {
+            <section class="section">
+                <h2>Recent Quiz Results</h2>
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var attempt in _quizAttempts.Take(5))
+                        {
+                            <tr>
+                                <td>@attempt.Module.Title</td>
+                                <td>
+                                    <span class="badge @(attempt.Score == attempt.TotalQuestions ? "badge-success" : "badge-user")">
+                                        @attempt.Score / @attempt.TotalQuestions
+                                    </span>
+                                </td>
+                                <td class="td-date">@attempt.AttemptedAt.ToLocalTime().ToString("dd MMM yyyy")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </section>
+        }
+    }
+</div>

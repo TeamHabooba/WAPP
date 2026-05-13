@@ -1,0 +1,132 @@
+@* Index.razor — public landing page *@
+@page "/"
+@inject ICourseService CourseService
+@inject AuthSession Auth
+@inject NavigationManager Nav
+
+<PageTitle>PwnLearn — Ethical Hacking E-Learning</PageTitle>
+
+@* ===== Hero section — inline style demonstrates required CSS method *@
+<section class="hero" style="background: linear-gradient(135deg, #0f1117 60%, #1a1d27 100%);">
+    <div class="hero__content">
+        <h1 class="hero__title">Learn Ethical Hacking.<br /><span class="accent">Think Like an Attacker.</span></h1>
+        <p class="hero__subtitle">
+            PwnLearn is a free e-learning platform designed to take you from curious beginner to confident
+            white-hat practitioner — through structured modules, real-world toolchain exposure, and CTF-style challenges.
+        </p>
+        <div class="hero__cta">
+            @if (Auth.IsAuthenticated)
+            {
+                <a href="/member/dashboard" class="btn-primary btn-lg">Go to Dashboard</a>
+            }
+            else
+            {
+                <a href="/auth/register" class="btn-primary btn-lg">Start Learning Free</a>
+                <a href="/courses" class="btn-secondary btn-lg">Browse Courses</a>
+            }
+        </div>
+    </div>
+    <div class="hero__visual" aria-hidden="true">
+        <div class="terminal">
+            <div class="terminal__bar">
+                <span></span><span></span><span></span>
+            </div>
+            <pre class="terminal__body"><code>┌──(kali㉿pwnlearn)-[~]
+└─$ nmap -sV 192.168.1.1
+Starting Nmap 7.94...
+<span class="t-green">PORT   STATE SERVICE VERSION</span>
+<span class="t-yellow">22/tcp open  ssh     OpenSSH 8.9</span>
+<span class="t-yellow">80/tcp open  http    Apache 2.4</span>
+<span class="t-green">Nmap done: 1 host up</span>
+└─$ _</code></pre>
+        </div>
+    </div>
+</section>
+
+@* ===== Stats bar *@
+<section class="stats-bar">
+    <div class="stat-item"><strong>@_courseCount</strong> Courses</div>
+    <div class="stat-item"><strong>Free</strong> Forever</div>
+    <div class="stat-item"><strong>White-hat</strong> Focus</div>
+    <div class="stat-item"><strong>Hands-on</strong> Labs</div>
+</section>
+
+@* ===== Featured courses *@
+<section class="section">
+    <div class="section-header">
+        <h2>Featured Courses</h2>
+        <a href="/courses" class="link-muted">View all →</a>
+    </div>
+
+    @if (_courses is null)
+    {
+        <LoadingSpinner />
+    }
+    else
+    {
+        <div class="courses-grid">
+            @foreach (var course in _courses.Take(3))
+            {
+                <CourseCard Course="course"
+                            ActionLabel="@(Auth.IsAuthenticated ? "Open Course" : "Preview")"
+                            OnActionClick="@(() => NavigateToCourse(course.Id))" />
+            }
+        </div>
+    }
+</section>
+
+@* ===== Why PwnLearn *@
+<section class="section section-alt">
+    <h2 class="section-title-center">Why PwnLearn?</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-card__icon">🎯</div>
+            <h3>Goal-Oriented</h3>
+            <p>Every course maps to a real-world skill — from reading a network scan to finding web vulnerabilities.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-card__icon">⚖️</div>
+            <h3>Ethics First</h3>
+            <p>All content is framed within a white-hat mindset and legal boundaries. Responsible disclosure is built in.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-card__icon">🏁</div>
+            <h3>CTF-Ready</h3>
+            <p>Build practical skills through module quizzes and CTF-style challenges that prepare you for competitions.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-card__icon">🆓</div>
+            <h3>Completely Free</h3>
+            <p>No paywalls, no subscriptions. PwnLearn is free for all university students and self-learners.</p>
+        </div>
+    </div>
+</section>
+
+@* ===== CTA banner *@
+@if (!Auth.IsAuthenticated)
+{
+    <section class="cta-banner">
+        <h2>Ready to start hacking ethically?</h2>
+        <p>Create your free account and access all courses instantly.</p>
+        <a href="/auth/register" class="btn-primary btn-lg">Create Free Account</a>
+    </section>
+}
+
+@code {
+    private List<Course>? _courses;
+    private int _courseCount;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _courses = await CourseService.GetAllPublishedAsync();
+        _courseCount = _courses.Count;
+    }
+
+    private void NavigateToCourse(int id)
+    {
+        if (Auth.IsAuthenticated)
+            Nav.NavigateTo($"/member/course/{id}");
+        else
+            Nav.NavigateTo($"/courses/{id}");
+    }
+}

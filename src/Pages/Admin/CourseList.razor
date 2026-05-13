@@ -1,0 +1,76 @@
+@* CourseList.razor — admin course management list *@
+@page "/admin/courses"
+
+<PageTitle>Manage Courses — Admin</PageTitle>
+
+<div class="page-container">
+    @if (!Auth.IsAdmin)
+    {
+        <LoadingSpinner Label="Redirecting…" />
+    }
+    else
+    {
+        <header class="page-header">
+            <div>
+                <a href="/admin" class="link-back">← Admin</a>
+                <h1>Courses <span class="count">@(_courses?.Count ?? 0)</span></h1>
+            </div>
+            <a href="/admin/courses/create" class="btn-primary">+ New Course</a>
+        </header>
+
+        <AlertBox Message="@_feedback" Type="@_feedbackType" />
+
+        @if (_isLoading)
+        {
+            <LoadingSpinner />
+        }
+        else if (_courses is { Count: 0 })
+        {
+            <p class="status-msg">No courses found. Create one above.</p>
+        }
+        else
+        {
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Difficulty</th>
+                        <th>Modules</th>
+                        <th>Published</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var course in _courses!)
+                    {
+                        <tr class="@(course.IsPublished ? "" : "row-inactive")">
+                            <td>@course.Id</td>
+                            <td class="td-name">@course.IconEmoji @course.Title</td>
+                            <td><span class="badge badge-category">@course.Category</span></td>
+                            <td><span class="badge badge-@course.Difficulty.ToLower()">@course.Difficulty</span></td>
+                            <td>@course.Modules.Count</td>
+                            <td>
+                                <span class="badge @(course.IsPublished ? "badge-success" : "badge-outline")">
+                                    @(course.IsPublished ? "Yes" : "No")
+                                </span>
+                            </td>
+                            <td class="td-actions">
+                                <a href="/admin/courses/edit/@course.Id" class="btn-edit">Edit</a>
+                                <button class="btn-delete" @onclick="() => ConfirmDelete(course.Id, course.Title)">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <ConfirmDialog IsVisible="_showConfirm"
+                       Title="Delete Course"
+                       Message="@($"Delete '{_deleteTitle}'? All its modules will also be removed. This cannot be undone.")"
+                       ConfirmLabel="Delete"
+                       OnConfirm="ExecuteDelete"
+                       OnCancel="CancelDelete" />
+    }
+</div>

@@ -1,0 +1,62 @@
+@* Register.razor — new member registration page *@
+@page "/auth/register"
+
+<PageTitle>Register — PwnLearn</PageTitle>
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-card__logo">🔐</div>
+        <h1 class="auth-card__title">Create Account</h1>
+        <p class="auth-card__sub">Join PwnLearn free and start learning ethical hacking today.</p>
+
+        <AlertBox Message="@_errorMessage" Type="danger" />
+        <AlertBox Message="@_successMessage" Type="success" />
+
+        @if (!_registered)
+        {
+            <EditForm Model="_model" OnValidSubmit="HandleRegister" novalidate>
+                <DataAnnotationsValidator />
+
+                <div class="form-group">
+                    <label for="name">Display Name</label>
+                    <InputText id="name" class="form-input" @bind-Value="_model.Name"
+                               placeholder="Your name" autocomplete="name" />
+                    <ValidationMessage For="@(() => _model.Name)" class="form-error-msg" />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <InputText id="email" class="form-input" @bind-Value="_model.Email"
+                               placeholder="you@example.com" autocomplete="email" />
+                    <ValidationMessage For="@(() => _model.Email)" class="form-error-msg" />
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <InputText id="password" class="form-input" type="password"
+                               @bind-Value="_model.Password" placeholder="Min. 8 characters" autocomplete="new-password" />
+                    <ValidationMessage For="@(() => _model.Password)" class="form-error-msg" />
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm">Confirm Password</label>
+                    <InputText id="confirm" class="form-input" type="password"
+                               @bind-Value="_model.ConfirmPassword" placeholder="Repeat password" autocomplete="new-password" />
+                    <ValidationMessage For="@(() => _model.ConfirmPassword)" class="form-error-msg" />
+                </div>
+
+                <button type="submit" class="btn-primary btn-full" disabled="@_isSubmitting">
+                    @(_isSubmitting ? "Creating account…" : "Create Account")
+                </button>
+            </EditForm>
+        }
+        else
+        {
+            <a href="/auth/login" class="btn-primary btn-full">Continue to Login →</a>
+        }
+
+        <p class="auth-card__footer">
+            Already have an account? <a href="/auth/login">Log in</a>
+        </p>
+    </div>
+</div>

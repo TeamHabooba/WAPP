@@ -1,0 +1,154 @@
+@* CourseView.razor — authenticated member course viewer with module reader and quiz *@
+@page "/member/course/{CourseId:int}"
+
+<PageTitle>@(_course?.Title ?? "Course") — PwnLearn</PageTitle>
+
+<div class="page-container">
+    @if (!Auth.IsAuthenticated)
+    {
+        <LoadingSpinner Label="Redirecting…" />
+    }
+    else if (_isLoading)
+    {
+        <LoadingSpinner />
+    }
+    else if (_course is null)
+    {
+        <p class="status-msg">Course not found.</p>
+    }
+    else
+    {
+        <a href="/member/dashboard" class="link-back">← Dashboard</a>
+
+        <div class="course-view-layout">
+            @* Sidebar — module list *@
+            <aside class="course-sidebar">
+                <div class="course-sidebar__header">
+                    <span>@_course.IconEmoji</span>
+                    <h3>@_course.Title</h3>
+                </div>
+                <nav aria-label="Course modules">
+                    <ol class="module-nav">
+                        @foreach (var module in _course.Modules.OrderBy(m => m.OrderIndex))
+                        {
+                            <li class="module-nav__item @(module.Id == _activeModuleId ? "active" : "")">
+                                <button @onclick="() => SelectModule(module.Id)">
+                                    <span class="module-nav__num">@module.OrderIndex</span>
+                                    @module.Title
+                                </button>
+                            </li>
+                        }
+                    </ol>
+                </nav>
+
+                @if (!_isEnrolled)
+                {
+                    <button class="btn-primary btn-full" @onclick="EnrollAsync">Enrol in Course</button>
+                }
+            </aside>
+
+            @* Main panel *@
+            <main class="course-main">
+                @if (_activeModule is null)
+                {
+                    <div class="course-welcome">
+                        <h1>@_course.Title</h1>
+                        <p>@_course.Description</p>
+                        <div class="badge-row">
+                            <span class="badge badge-@_course.Difficulty.ToLower()">@_course.Difficulty</span>
+                            <span class="badge badge-category">@_course.Category</span>
+                        </div>
+                        <button class="btn-primary" @onclick="() => SelectModule(_course.Modules.OrderBy(m => m.OrderIndex).First().Id)">
+                            Start First Module →
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <article class="module-reader">
+                        <h2>@_activeModule.Title</h2>
+                        <div class="module-content">
+                            @foreach (var paragraph in _activeModule.Content.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+                            {
+                                <p>@paragraph</p>
+                            }
+                        </div>
+
+                        @if (_isEnrolled)
+                        {
+                            <button class="btn-secondary btn-sm" @onclick="MarkComplete">
+                                ✓ Mark as Complete
+                            </button>
+                        }
+                        <AlertBox Message="@_moduleMsg" Type="@_moduleMsgType" />
+                    </article>
+
+                    @* Quiz section *@
+                    @if (_questions.Count > 0)
+                    {
+                        <section class="quiz-section">
+                            <h3>🧠 Module Quiz</h3>
+
+                            @if (_quizSubmitted)
+                            {
+                                <div class="quiz-result">
+                                    <p class="quiz-result__score">@_quizScore / @_questions.Count correct</p>
+                                    <div class="quiz-answers">
+                                        @for (int qi = 0; qi < _questions.Count; qi++)
+                                        {
+                                            var q = _questions[qi];
+                                            var choices = System.Text.Json.JsonSerializer.Deserialize<string[]>(q.ChoicesJson) ?? Array.Empty<string>();
+                                            var selected = _answers.GetValueOrDefault(qi, -1);
+                                            var isCorrect = selected == q.CorrectIndex;
+                                            <div class="quiz-answer @(isCorrect ? "correct" : "wrong")">
+                                                <p><strong>Q@(qi + 1):</strong> @q.QuestionText</p>
+                                                <p>Your answer: <em>@(selected >= 0 ? choices[selected] : "—")</em></p>
+                                                @if (!isCorrect)
+                                                {
+                                                    <p>Correct: <em>@choices[q.CorrectIndex]</em></p>
+                                                }
+                                                <p class="quiz-explanation">@q.Explanation</p>
+                                            </div>
+                                        }
+                                    </div>
+                                    <button class="btn-secondary" @onclick="ResetQuiz">Retry Quiz</button>
+                                </div>
+                            }
+                            else
+                            {
+                                @for (int qi = 0; qi < _questions.Count; qi++)
+                                {
+                                    var q = _questions[qi];
+                                    var idx = qi; // capture for lambda
+                                    var choices = System.Text.Json.JsonSerializer.Deserialize<string[]>(q.ChoicesJson) ?? Array.Empty<string>();
+                                    <div class="quiz-question">
+                                        <p class="quiz-question__text"><strong>@(idx + 1).</strong> @q.QuestionText</p>
+                                        <div class="quiz-choices">
+                                            @for (int ci = 0; ci < choices.Length; ci++)
+                                            {
+                                                var choiceIdx = ci;
+                                                var isSelected = _answers.GetValueOrDefault(idx, -1) == choiceIdx;
+                                                <label class="quiz-choice @(isSelected ? "selected" : "")">
+                                                    <input type="radio" name="q@(idx)"
+                                                           checked="@isSelected"
+                                                           @onchange="() => SelectAnswer(idx, choiceIdx)" />
+                                                    @choices[ci]
+                                                </label>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                <button class="btn-primary" @onclick="SubmitQuiz"
+                                        disabled="@(_answers.Count < _questions.Count)">
+                                    Submit Quiz
+                                </button>
+                            }
+                        </section>
+                    }
+                }
+            </main>
+        </div>
+
+        <AlertBox Message="@_enrollMsg" Type="@_enrollMsgType" />
+    }
+</div>

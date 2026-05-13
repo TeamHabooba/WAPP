@@ -1,0 +1,26 @@
+@* ConfirmDialog.razor — modal confirmation dialog, used before destructive operations *@
+
+@if (IsVisible)
+{
+    <div class="modal-backdrop" @onclick="HandleBackdropClick">
+        <div class="modal modal-small" @onclick:stopPropagation="true" role="dialog" aria-modal="true">
+            <h2>@Title</h2>
+            <p style="color: var(--muted); font-size: 0.9rem;">@Message</p>
+            <div class="modal-actions">
+                <button class="btn-secondary" @onclick="OnCancel">Cancel</button>
+                <button class="btn-danger" @onclick="OnConfirm">@ConfirmLabel</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public string Title { get; set; } = "Confirm Action";
+    [Parameter] public string Message { get; set; } = "Are you sure? This cannot be undone.";
+    [Parameter] public string ConfirmLabel { get; set; } = "Delete";
+    [Parameter] public EventCallback OnConfirm { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+
+    private async Task HandleBackdropClick() => await OnCancel.InvokeAsync();
+}

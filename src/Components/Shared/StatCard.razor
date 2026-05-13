@@ -1,0 +1,15 @@
+@* StatCard.razor — small statistic card used on admin and member dashboards *@
+
+<div class="stat-card">
+    <div class="stat-card__icon">@Icon</div>
+    <div class="stat-card__body">
+        <span class="stat-card__value">@Value</span>
+        <span class="stat-card__label">@Label</span>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Icon { get; set; } = "📊";
+    [Parameter, EditorRequired] public string Value { get; set; } = "0";
+    [Parameter, EditorRequired] public string Label { get; set; } = "";
+}

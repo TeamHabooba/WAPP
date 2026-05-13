@@ -1,0 +1,13 @@
+@* LoadingSpinner.razor — displayed while async data is loading *@
+
+<div class="spinner-wrap">
+    <div class="spinner"></div>
+    @if (!string.IsNullOrEmpty(Label))
+    {
+        <p class="spinner-label">@Label</p>
+    }
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; } = "Loading…";
+}

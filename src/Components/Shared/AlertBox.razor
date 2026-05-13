@@ -1,0 +1,25 @@
+@* AlertBox.razor — reusable alert/feedback message box *@
+
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="alert alert-@Type" role="alert">
+        <span class="alert-icon">@Icon</span>
+        <span>@Message</span>
+    </div>
+}
+
+@code {
+    /// <summary>The message to display. Empty/null hides the component.</summary>
+    [Parameter] public string? Message { get; set; }
+
+    /// <summary>Visual type: "success", "danger", "warning", "info".</summary>
+    [Parameter] public string Type { get; set; } = "info";
+
+    private string Icon => Type switch
+    {
+        "success" => "✓",
+        "danger"  => "✕",
+        "warning" => "⚠",
+        _         => "ℹ"
+    };
+}

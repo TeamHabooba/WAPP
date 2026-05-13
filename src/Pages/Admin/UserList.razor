@@ -1,0 +1,88 @@
+@* UserList.razor — admin user management *@
+@page "/admin/users"
+
+<PageTitle>Manage Users — Admin</PageTitle>
+
+<div class="page-container">
+    @if (!Auth.IsAdmin)
+    {
+        <LoadingSpinner Label="Redirecting…" />
+    }
+    else
+    {
+        <header class="page-header">
+            <div>
+                <a href="/admin" class="link-back">← Admin</a>
+                <h1>Users <span class="count">@(_users?.Count ?? 0)</span></h1>
+            </div>
+        </header>
+
+        <AlertBox Message="@_feedback" Type="@_feedbackType" />
+
+        <input class="search-input" style="margin-bottom:1rem;" type="search"
+               placeholder="Search by name or email…"
+               @bind="_search" @bind:event="oninput" aria-label="Search users" />
+
+        @if (_isLoading)
+        {
+            <LoadingSpinner />
+        }
+        else if (Filtered.Count == 0)
+        {
+            <p class="status-msg">No users found.</p>
+        }
+        else
+        {
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Joined</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Filtered)
+                    {
+                        <tr class="@(user.IsActive ? "" : "row-inactive")">
+                            <td>@user.Id</td>
+                            <td class="td-name">@user.Name</td>
+                            <td>@user.Email</td>
+                            <td>
+                                <span class="badge badge-@user.Role.ToLower()">@user.Role</span>
+                            </td>
+                            <td>
+                                <button class="toggle-btn @(user.IsActive ? "active" : "inactive")"
+                                        @onclick="() => ToggleUser(user.Id)"
+                                        title="@(user.IsActive ? "Deactivate" : "Activate")">
+                                    @(user.IsActive ? "Active" : "Inactive")
+                                </button>
+                            </td>
+                            <td class="td-date">@user.CreatedAt.ToLocalTime().ToString("dd MMM yyyy")</td>
+                            <td class="td-actions">
+                                @if (user.Id != Auth.CurrentUser!.Id)
+                                {
+                                    <button class="btn-delete"
+                                            @onclick="() => ConfirmDelete(user.Id, user.Name)">
+                                        Delete
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <ConfirmDialog IsVisible="_showConfirm"
+                       Title="Delete User"
+                       Message="@($"Permanently delete '{_deleteName}'? This cannot be undone.")"
+                       ConfirmLabel="Delete"
+                       OnConfirm="ExecuteDelete"
+                       OnCancel="CancelDelete" />
+    }
+</div>
