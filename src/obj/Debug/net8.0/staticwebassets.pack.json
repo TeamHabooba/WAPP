@@ -1,0 +1,33 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Shunto's Device\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\APU CYB One Drive\\D2-2 One Drive\\Web Applications\\Project\\src\\wwwroot\\assets\\.gitkeep",
+      "PackagePath": "staticwebassets\\assets\\.gitkeep"
+    },
+    {
+      "Id": "C:\\Users\\Shunto's Device\\OneDrive - Asia Pacific University of Technology And Innovation (APU)\\APU CYB One Drive\\D2-2 One Drive\\Web Applications\\Project\\src\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.PwnLearn.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.PwnLearn.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.PwnLearn.props",
+      "PackagePath": "build\\PwnLearn.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.PwnLearn.props",
+      "PackagePath": "buildMultiTargeting\\PwnLearn.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.PwnLearn.props",
+      "PackagePath": "buildTransitive\\PwnLearn.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

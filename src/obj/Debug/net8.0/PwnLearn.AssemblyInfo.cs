@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PwnLearn")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+118a6cc249a0b64c002765dd5357b44388af85da")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+016e598752b4687f05260e3337554c07f57aaec6")]
 [assembly: System.Reflection.AssemblyProductAttribute("PwnLearn")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PwnLearn")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

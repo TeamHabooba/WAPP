@@ -12,6 +12,10 @@ public partial class CourseList : ComponentBase
     [Inject] private ICourseService CourseService { get; set; } = default!;
     [Inject] private NavigationManager Nav { get; set; } = default!;
 
+    // =====Query parameters
+    [SupplyParameterFromQuery(Name = "status")]
+    private string? Status { get; set; }
+
     // =====State
     private List<Course>? _courses;
     private bool _isLoading = true;
@@ -34,6 +38,11 @@ public partial class CourseList : ComponentBase
     {
         if (!Auth.IsAdmin) return;
         await LoadCoursesAsync();
+        if (Status == "created")
+        {
+            _feedback = "Course created successfully.";
+            _feedbackType = "success";
+        }
     }
 
     // =====Event handlers

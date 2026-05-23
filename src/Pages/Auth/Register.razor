@@ -14,7 +14,7 @@
 
         @if (!_registered)
         {
-            <EditForm Model="_model" OnValidSubmit="HandleRegister" novalidate>
+            <EditForm Model="_model" FormName="register" OnValidSubmit="HandleRegister" novalidate>
                 <DataAnnotationsValidator />
 
                 <div class="form-group">

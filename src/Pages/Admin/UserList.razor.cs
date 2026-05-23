@@ -47,6 +47,13 @@ public partial class UserList : ComponentBase
     // =====Event handlers
     private async Task ToggleUser(int id)
     {
+        if (id == Auth.CurrentUser?.Id)
+        {
+            _feedback = "You cannot deactivate your own admin account.";
+            _feedbackType = "danger";
+            return;
+        }
+
         var ok = await UserService.ToggleActiveAsync(id);
         if (ok)
         {

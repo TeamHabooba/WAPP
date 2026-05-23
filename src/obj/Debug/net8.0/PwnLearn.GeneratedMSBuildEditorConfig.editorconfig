@@ -1,7 +1,5 @@
 is_global = true
 build_property.TargetFramework = net8.0
-build_property.TargetFrameworkIdentifier = .NETCoreApp
-build_property.TargetFrameworkVersion = v8.0
 build_property.TargetPlatformMinVersion = 
 build_property.UsingMicrosoftNETSdkWeb = true
 build_property.ProjectTypeGuids = 
@@ -11,105 +9,105 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = PwnLearn
 build_property.RootNamespace = PwnLearn
-build_property.ProjectDir = C:\Users\revik\source\repos\WAPP\src\
+build_property.ProjectDir = C:\Users\Shunto's Device\OneDrive - Asia Pacific University of Technology And Innovation (APU)\APU CYB One Drive\D2-2 One Drive\Web Applications\Project\src\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\revik\source\repos\WAPP\src
+build_property.MSBuildProjectDirectory = C:\Users\Shunto's Device\OneDrive - Asia Pacific University of Technology And Innovation (APU)\APU CYB One Drive\D2-2 One Drive\Web Applications\Project\src
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/revik/source/repos/WAPP/src/App.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Components/Layout/MainLayout.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Components/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Components/Layout/NavMenu.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Components/Layout/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Components/Shared/AlertBox.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Components/Shared/AlertBox.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcQWxlcnRCb3gucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Components/Shared/ConfirmDialog.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Components/Shared/ConfirmDialog.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcQ29uZmlybURpYWxvZy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Components/Shared/CourseCard.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Components/Shared/CourseCard.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcQ291cnNlQ2FyZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Components/Shared/LoadingSpinner.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Components/Shared/LoadingSpinner.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcTG9hZGluZ1NwaW5uZXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Components/Shared/StatCard.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Components/Shared/StatCard.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcU3RhdENhcmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Pages/Admin/AdminDashboard.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Pages/Admin/AdminDashboard.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQWRtaW5EYXNoYm9hcmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Pages/Admin/CourseCreate.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Pages/Admin/CourseCreate.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQ291cnNlQ3JlYXRlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Pages/Admin/CourseEdit.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Pages/Admin/CourseEdit.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQ291cnNlRWRpdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Pages/Admin/CourseList.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Pages/Admin/CourseList.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQ291cnNlTGlzdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Pages/Admin/UserList.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Pages/Admin/UserList.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cVXNlckxpc3QucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Pages/Auth/Login.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Pages/Auth/Login.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxMb2dpbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Pages/Auth/Register.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Pages/Auth/Register.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxSZWdpc3Rlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Pages/Member/CourseView.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Pages/Member/CourseView.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtYmVyXENvdXJzZVZpZXcucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Pages/Member/Dashboard.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Pages/Member/Dashboard.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtYmVyXERhc2hib2FyZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Pages/Public/About.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Pages/Public/About.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHVibGljXEFib3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Pages/Public/CourseDetail.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Pages/Public/CourseDetail.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHVibGljXENvdXJzZURldGFpbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Pages/Public/Courses.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Pages/Public/Courses.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHVibGljXENvdXJzZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Pages/Public/Index.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Pages/Public/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHVibGljXEluZGV4LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/Routes.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/Routes.razor]
 build_metadata.AdditionalFiles.TargetPath = Um91dGVzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/revik/source/repos/WAPP/src/_Imports.razor]
+[C:/Users/Shunto's Device/OneDrive - Asia Pacific University of Technology And Innovation (APU)/APU CYB One Drive/D2-2 One Drive/Web Applications/Project/src/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 

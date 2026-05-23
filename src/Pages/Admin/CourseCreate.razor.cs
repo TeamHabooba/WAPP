@@ -44,7 +44,7 @@ public partial class CourseCreate : ComponentBase
 
         var success = await CourseService.CreateAsync(course);
         if (success)
-            Nav.NavigateTo("/admin/courses");
+            Nav.NavigateTo("/admin/courses?status=created");
         else
         {
             _error = "Failed to create course. Please try again.";
