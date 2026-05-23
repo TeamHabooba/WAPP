@@ -1,3 +1,13 @@
-.vs
+.vs/
+.idea/
 
-.idea
+# Build and IDE-generated output. These files contain machine-local paths.
+**/bin/
+**/obj/
+*.user
+*.suo
+
+# LocalDB database and runtime log companions are generated locally.
+data/*.mdf
+data/*.ldf
+data/*.log

@@ -99,8 +99,10 @@ public partial class CourseEdit : ComponentBase
         public string Description { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Category is required.")]
+        [RegularExpression("^(Fundamentals|Tools|CTF)$", ErrorMessage = "Select a valid category.")]
         public string Category { get; set; } = string.Empty;
 
+        [RegularExpression("^(Beginner|Intermediate|Advanced)$", ErrorMessage = "Select a valid difficulty.")]
         public string Difficulty { get; set; } = "Beginner";
 
         [StringLength(8)]

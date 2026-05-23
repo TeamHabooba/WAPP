@@ -7,6 +7,9 @@ namespace PwnLearn.Data;
 /// <summary>Entity Framework Core database context for PwnLearn.</summary>
 public class AppDbContext : DbContext
 {
+    private const string AdminPasswordHash = "$2a$11$cnoswt/QTctj7ElAQUC6xezDCqu9TGoAbcdaJby0kDnS05kAgPvMG";
+    private const string MemberPasswordHash = "$2a$11$kIZ9znlLyQm9NdMPkMb41OecQPMch8UCw1.m.uyEo4naTBK0ZpH26";
+
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     public DbSet<User> Users { get; set; }
@@ -24,9 +27,56 @@ public class AppDbContext : DbContext
             .HasIndex(u => u.Email)
             .IsUnique();
 
+        modelBuilder.Entity<User>().Property(u => u.Name).HasMaxLength(80).IsRequired();
+        modelBuilder.Entity<User>().Property(u => u.Email).HasMaxLength(160).IsRequired();
+        modelBuilder.Entity<User>().Property(u => u.PasswordHash).IsRequired();
+        modelBuilder.Entity<User>().Property(u => u.Role).HasMaxLength(20).IsRequired();
+
+        modelBuilder.Entity<Course>().Property(c => c.Title).HasMaxLength(120).IsRequired();
+        modelBuilder.Entity<Course>().Property(c => c.Description).HasMaxLength(500).IsRequired();
+        modelBuilder.Entity<Course>().Property(c => c.Category).HasMaxLength(40).IsRequired();
+        modelBuilder.Entity<Course>().Property(c => c.Difficulty).HasMaxLength(20).IsRequired();
+        modelBuilder.Entity<Course>().Property(c => c.IconEmoji).HasMaxLength(8).IsRequired();
+
         modelBuilder.Entity<Enrollment>()
             .HasIndex(e => new { e.UserId, e.CourseId })
             .IsUnique();
+
+        modelBuilder.Entity<Module>()
+            .HasOne(m => m.Course)
+            .WithMany(c => c.Modules)
+            .HasForeignKey(m => m.CourseId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<QuizQuestion>()
+            .HasOne(q => q.Module)
+            .WithMany(m => m.QuizQuestions)
+            .HasForeignKey(q => q.ModuleId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Enrollment>()
+            .HasOne(e => e.Course)
+            .WithMany(c => c.Enrollments)
+            .HasForeignKey(e => e.CourseId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Enrollment>()
+            .HasOne(e => e.User)
+            .WithMany(u => u.Enrollments)
+            .HasForeignKey(e => e.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<QuizAttempt>()
+            .HasOne(a => a.User)
+            .WithMany(u => u.QuizAttempts)
+            .HasForeignKey(a => a.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<QuizAttempt>()
+            .HasOne(a => a.Module)
+            .WithMany()
+            .HasForeignKey(a => a.ModuleId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         SeedData(modelBuilder);
     }
@@ -35,11 +85,11 @@ public class AppDbContext : DbContext
     {
         modelBuilder.Entity<User>().HasData(
             new User { Id = 1, Name = "Admin", Email = "admin@pwnlearn.io",
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@1234"),
+                PasswordHash = AdminPasswordHash,
                 Role = "Admin", IsActive = true,
                 CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc) },
             new User { Id = 2, Name = "Demo Member", Email = "demo@pwnlearn.io",
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("Member@1234"),
+                PasswordHash = MemberPasswordHash,
                 Role = "Member", IsActive = true,
                 CreatedAt = new DateTime(2025, 1, 1, 0, 0, 0, DateTimeKind.Utc) }
         );
