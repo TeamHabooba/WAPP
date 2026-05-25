@@ -1,0 +1,79 @@
+@* UserEdit.razor — admin form to edit an existing user *@
+@page "/admin/users/edit/{Id:int}"
+
+<PageTitle>Edit User — Admin</PageTitle>
+
+<div class="page-container">
+    @if (!Auth.IsAdmin)
+    {
+        <LoadingSpinner Label="Redirecting…" />
+    }
+    else if (_isLoading)
+    {
+        <LoadingSpinner />
+    }
+    else if (_model is null)
+    {
+        <p class="status-msg">User not found.</p>
+    }
+    else
+    {
+        <header class="page-header">
+            <div>
+                <a href="/admin/users" class="link-back">← Users</a>
+                <h1>Edit User</h1>
+            </div>
+        </header>
+
+        <AlertBox Message="@_error" Type="danger" />
+        <AlertBox Message="@_success" Type="success" />
+
+        @if (Id == Auth.CurrentUser!.Id)
+        {
+            <AlertBox Message="You are editing your own account. Role and active status are locked." Type="warning" />
+        }
+
+        <div class="form-card">
+            <EditForm Model="_model" FormName="admin-user-edit" OnValidSubmit="HandleUpdate" novalidate>
+                <DataAnnotationsValidator />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <InputText class="form-input" @bind-Value="_model.Name" />
+                        <ValidationMessage For="@(() => _model.Name)" class="form-error-msg" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <InputText class="form-input" @bind-Value="_model.Email" type="email" />
+                        <ValidationMessage For="@(() => _model.Email)" class="form-error-msg" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Role</label>
+                        <InputSelect class="form-input" @bind-Value="_model.Role" disabled="@(Id == Auth.CurrentUser!.Id)">
+                            <option value="Member">Member</option>
+                            <option value="Admin">Admin</option>
+                        </InputSelect>
+                    </div>
+
+                    <div class="form-group form-check" style="align-self:flex-end; padding-bottom:0.5rem;">
+                        <InputCheckbox @bind-Value="_model.IsActive" id="isActive"
+                                       disabled="@(Id == Auth.CurrentUser!.Id)" />
+                        <label for="isActive">Active (can log in)</label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <a href="/admin/users" class="btn-secondary">Cancel</a>
+                    <button type="submit" class="btn-primary" disabled="@_isSubmitting">
+                        @(_isSubmitting ? "Saving…" : "Save Changes")
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    }
+</div>

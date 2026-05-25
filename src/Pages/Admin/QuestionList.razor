@@ -1,0 +1,76 @@
+@* QuestionList.razor — admin quiz question management for a specific module *@
+@page "/admin/modules/{ModuleId:int}/questions"
+
+<PageTitle>Quiz Questions — Admin</PageTitle>
+
+<div class="page-container">
+    @if (!Auth.IsAdmin)
+    {
+        <LoadingSpinner Label="Redirecting…" />
+    }
+    else
+    {
+        <header class="page-header">
+            <div>
+                @if (_module is not null)
+                {
+                    <a href="/admin/courses/@_module.CourseId/modules" class="link-back">← Modules</a>
+                }
+                <h1>@(_module?.Title ?? "Module") — Questions <span class="count">@(_questions?.Count ?? 0)</span></h1>
+            </div>
+            <a href="/admin/modules/@ModuleId/questions/create" class="btn-primary">+ New Question</a>
+        </header>
+
+        <AlertBox Message="@_feedback" Type="@_feedbackType" />
+
+        @if (_isLoading)
+        {
+            <LoadingSpinner />
+        }
+        else if (_questions is { Count: 0 })
+        {
+            <p class="status-msg">No questions yet. Create one above.</p>
+        }
+        else
+        {
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Question</th>
+                        <th>Choices</th>
+                        <th>Correct</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var q in _questions!)
+                    {
+                        var choices = ParseChoices(q.ChoicesJson);
+                        <tr>
+                            <td>@q.Id</td>
+                            <td class="td-name">@q.QuestionText</td>
+                            <td style="font-size:0.8rem; color:var(--muted);">@string.Join(" / ", choices)</td>
+                            <td>
+                                <span class="badge badge-success">
+                                    @(choices.ElementAtOrDefault(q.CorrectIndex) ?? "-")
+                                </span>
+                            </td>
+                            <td class="td-actions">
+                                <a href="/admin/modules/@ModuleId/questions/edit/@q.Id" class="btn-edit">Edit</a>
+                                <button class="btn-delete" @onclick="() => ConfirmDelete(q.Id, q.QuestionText)">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <ConfirmDialog IsVisible="_showConfirm"
+                       Title="Delete Question"
+                       Message="@($"Delete this question? This cannot be undone.")"
+                       ConfirmLabel="Delete"
+                       OnConfirm="ExecuteDelete"
+                       OnCancel="CancelDelete" />
+    }
+</div>

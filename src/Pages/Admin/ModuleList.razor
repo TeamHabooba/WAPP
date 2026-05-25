@@ -1,0 +1,67 @@
+@* ModuleList.razor — admin module management for a specific course *@
+@page "/admin/courses/{CourseId:int}/modules"
+
+<PageTitle>Modules — Admin</PageTitle>
+
+<div class="page-container">
+    @if (!Auth.IsAdmin)
+    {
+        <LoadingSpinner Label="Redirecting…" />
+    }
+    else
+    {
+        <header class="page-header">
+            <div>
+                <a href="/admin/courses" class="link-back">← Courses</a>
+                <h1>@(_course?.Title ?? "Course") — Modules <span class="count">@(_modules?.Count ?? 0)</span></h1>
+            </div>
+            <a href="/admin/courses/@CourseId/modules/create" class="btn-primary">+ New Module</a>
+        </header>
+
+        <AlertBox Message="@_feedback" Type="@_feedbackType" />
+
+        @if (_isLoading)
+        {
+            <LoadingSpinner />
+        }
+        else if (_modules is { Count: 0 })
+        {
+            <p class="status-msg">No modules yet. Create one above.</p>
+        }
+        else
+        {
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>Order</th>
+                        <th>Title</th>
+                        <th>Quiz Questions</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var module in _modules!)
+                    {
+                        <tr>
+                            <td>@module.OrderIndex</td>
+                            <td class="td-name">@module.Title</td>
+                            <td>@module.QuizQuestions.Count</td>
+                            <td class="td-actions">
+                                <a href="/admin/modules/@module.Id/questions" class="btn-edit">Questions</a>
+                                <a href="/admin/courses/@CourseId/modules/edit/@module.Id" class="btn-edit">Edit</a>
+                                <button class="btn-delete" @onclick="() => ConfirmDelete(module.Id, module.Title)">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <ConfirmDialog IsVisible="_showConfirm"
+                       Title="Delete Module"
+                       Message="@($"Delete '{_deleteTitle}'? All its quiz questions will also be removed.")"
+                       ConfirmLabel="Delete"
+                       OnConfirm="ExecuteDelete"
+                       OnCancel="CancelDelete" />
+    }
+</div>

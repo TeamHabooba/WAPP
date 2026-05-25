@@ -7,7 +7,6 @@
 *.user
 *.suo
 
-# LocalDB database and runtime log companions are generated locally.
-data/*.mdf
+# Runtime log companions are generated locally; .mdf is committed for shared sync.
 data/*.ldf
 data/*.log

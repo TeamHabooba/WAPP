@@ -1,0 +1,76 @@
+@* QuestionEdit.razor — admin form to edit a quiz question *@
+@page "/admin/modules/{ModuleId:int}/questions/edit/{QuestionId:int}"
+
+<PageTitle>Edit Question — Admin</PageTitle>
+
+<div class="page-container">
+    @if (!Auth.IsAdmin)
+    {
+        <LoadingSpinner Label="Redirecting…" />
+    }
+    else if (_isLoading)
+    {
+        <LoadingSpinner />
+    }
+    else if (_model is null)
+    {
+        <p class="status-msg">Question not found.</p>
+    }
+    else
+    {
+        <header class="page-header">
+            <div>
+                <a href="/admin/modules/@ModuleId/questions" class="link-back">← Questions</a>
+                <h1>Edit Question</h1>
+            </div>
+        </header>
+
+        <AlertBox Message="@_error" Type="danger" />
+
+        <div class="form-card">
+            <EditForm Model="_model" FormName="admin-question-edit" OnValidSubmit="HandleUpdate" novalidate>
+                <DataAnnotationsValidator />
+
+                <div class="form-group">
+                    <label>Question Text</label>
+                    <InputTextArea class="form-input form-textarea" @bind-Value="_model.QuestionText" rows="3" />
+                    <ValidationMessage For="@(() => _model.QuestionText)" class="form-error-msg" />
+                </div>
+
+                <fieldset class="form-card" style="margin:0; padding:1rem 1.25rem; border:1px solid var(--border);">
+                    <legend style="font-weight:600; padding:0 0.25rem;">Answer Choices</legend>
+                    <p style="font-size:0.85rem; color:var(--muted); margin-bottom:0.75rem;">
+                        Select the radio button next to the correct answer.
+                    </p>
+
+                    @for (int i = 0; i < 4; i++)
+                    {
+                        var idx = i;
+                        <div class="form-group" style="display:flex; align-items:center; gap:0.75rem;">
+                            <input type="radio" name="correctIndex"
+                                   checked="@(_model.CorrectIndex == idx)"
+                                   @onchange="() => _model.CorrectIndex = idx"
+                                   title="Mark as correct" style="flex-shrink:0;" />
+                            <InputText class="form-input" style="flex:1;"
+                                       @bind-Value="_model.Choices[idx]"
+                                       placeholder="@($"Choice {idx + 1}")" />
+                        </div>
+                    }
+                </fieldset>
+
+                <div class="form-group" style="margin-top:1rem;">
+                    <label>Explanation</label>
+                    <InputTextArea class="form-input form-textarea" @bind-Value="_model.Explanation" rows="3" />
+                    <ValidationMessage For="@(() => _model.Explanation)" class="form-error-msg" />
+                </div>
+
+                <div class="form-actions">
+                    <a href="/admin/modules/@ModuleId/questions" class="btn-secondary">Cancel</a>
+                    <button type="submit" class="btn-primary" disabled="@_isSubmitting">
+                        @(_isSubmitting ? "Saving…" : "Save Changes")
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    }
+</div>

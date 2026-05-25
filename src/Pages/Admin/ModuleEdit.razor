@@ -1,0 +1,61 @@
+@* ModuleEdit.razor — admin form to edit an existing module *@
+@page "/admin/courses/{CourseId:int}/modules/edit/{ModuleId:int}"
+
+<PageTitle>Edit Module — Admin</PageTitle>
+
+<div class="page-container">
+    @if (!Auth.IsAdmin)
+    {
+        <LoadingSpinner Label="Redirecting…" />
+    }
+    else if (_isLoading)
+    {
+        <LoadingSpinner />
+    }
+    else if (_model is null)
+    {
+        <p class="status-msg">Module not found.</p>
+    }
+    else
+    {
+        <header class="page-header">
+            <div>
+                <a href="/admin/courses/@CourseId/modules" class="link-back">← Modules</a>
+                <h1>Edit Module</h1>
+            </div>
+        </header>
+
+        <AlertBox Message="@_error" Type="danger" />
+        <AlertBox Message="@_success" Type="success" />
+
+        <div class="form-card">
+            <EditForm Model="_model" FormName="admin-module-edit" OnValidSubmit="HandleUpdate" novalidate>
+                <DataAnnotationsValidator />
+
+                <div class="form-group">
+                    <label>Title</label>
+                    <InputText class="form-input" @bind-Value="_model.Title" />
+                    <ValidationMessage For="@(() => _model.Title)" class="form-error-msg" />
+                </div>
+
+                <div class="form-group">
+                    <label>Content</label>
+                    <InputTextArea class="form-input form-textarea" @bind-Value="_model.Content" rows="10" />
+                    <ValidationMessage For="@(() => _model.Content)" class="form-error-msg" />
+                </div>
+
+                <div class="form-group" style="max-width:140px;">
+                    <label>Display Order</label>
+                    <InputNumber class="form-input" @bind-Value="_model.OrderIndex" />
+                </div>
+
+                <div class="form-actions">
+                    <a href="/admin/courses/@CourseId/modules" class="btn-secondary">Cancel</a>
+                    <button type="submit" class="btn-primary" disabled="@_isSubmitting">
+                        @(_isSubmitting ? "Saving…" : "Save Changes")
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    }
+</div>
