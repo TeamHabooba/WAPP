@@ -1,3 +1,12 @@
-.vs
+.vs/
+.idea/
 
-.idea
+# Build and IDE-generated output. These files contain machine-local paths.
+**/bin/
+**/obj/
+*.user
+*.suo
+
+# Runtime log companions are generated locally; .mdf is committed for shared sync.
+data/*.ldf
+data/*.log

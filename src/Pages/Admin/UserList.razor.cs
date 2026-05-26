@@ -12,6 +12,10 @@ public partial class UserList : ComponentBase
     [Inject] private IUserService UserService { get; set; } = default!;
     [Inject] private NavigationManager Nav { get; set; } = default!;
 
+    // =====Query parameters
+    [SupplyParameterFromQuery(Name = "status")]
+    private string? Status { get; set; }
+
     // =====State
     private List<User>? _users;
     private string _search = string.Empty;
@@ -42,11 +46,24 @@ public partial class UserList : ComponentBase
     {
         if (!Auth.IsAdmin) return;
         await LoadUsersAsync();
+        _feedback = Status switch
+        {
+            "created" => "User created successfully.",
+            _ => null
+        };
+        _feedbackType = "success";
     }
 
     // =====Event handlers
     private async Task ToggleUser(int id)
     {
+        if (id == Auth.CurrentUser?.Id)
+        {
+            _feedback = "You cannot deactivate your own admin account.";
+            _feedbackType = "danger";
+            return;
+        }
+
         var ok = await UserService.ToggleActiveAsync(id);
         if (ok)
         {

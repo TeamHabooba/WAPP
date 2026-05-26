@@ -9,10 +9,12 @@ namespace PwnLearn.Services;
 public class QuizService : IQuizService
 {
     private readonly AppDbContext _context;
+    private readonly ILogger<QuizService> _logger;
 
-    public QuizService(AppDbContext context)
+    public QuizService(AppDbContext context, ILogger<QuizService> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task<List<QuizQuestion>> GetQuestionsForModuleAsync(int moduleId)
@@ -53,4 +55,56 @@ public class QuizService : IQuizService
             .Where(a => a.UserId == userId && a.ModuleId == moduleId)
             .OrderByDescending(a => a.Score)
             .FirstOrDefaultAsync();
+
+    // =====Admin CRUD
+
+    public async Task<QuizQuestion?> GetQuestionByIdAsync(int id)
+        => await _context.QuizQuestions.FindAsync(id);
+
+    public async Task<bool> CreateQuestionAsync(QuizQuestion question)
+    {
+        try
+        {
+            _context.QuizQuestions.Add(question);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch (DbUpdateException ex)
+        {
+            _logger.LogError(ex, "Failed to create question for module {ModuleId}.", question.ModuleId);
+            return false;
+        }
+    }
+
+    public async Task<bool> UpdateQuestionAsync(QuizQuestion question)
+    {
+        try
+        {
+            _context.QuizQuestions.Update(question);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch (DbUpdateException ex)
+        {
+            _logger.LogError(ex, "Failed to update question {QuestionId}.", question.Id);
+            return false;
+        }
+    }
+
+    public async Task<bool> DeleteQuestionAsync(int id)
+    {
+        try
+        {
+            var q = await _context.QuizQuestions.FindAsync(id);
+            if (q is null) return false;
+            _context.QuizQuestions.Remove(q);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch (DbUpdateException ex)
+        {
+            _logger.LogError(ex, "Failed to delete question {QuestionId}.", id);
+            return false;
+        }
+    }
 }

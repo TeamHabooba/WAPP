@@ -11,7 +11,7 @@
 
         <AlertBox Message="@_errorMessage" Type="danger" />
 
-        <EditForm Model="_model" OnValidSubmit="HandleLogin" novalidate>
+        <EditForm Model="_model" FormName="login" OnValidSubmit="HandleLogin" novalidate>
             <DataAnnotationsValidator />
 
             <div class="form-group">

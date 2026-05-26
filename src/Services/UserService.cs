@@ -101,4 +101,33 @@ public class UserService : IUserService
         user.IsActive = !user.IsActive;
         return await UpdateAsync(user);
     }
+
+    public async Task<(bool Success, string? Error)> AdminCreateAsync(
+        string name, string email, string password, string role, bool isActive)
+    {
+        var normalised = email.ToLower().Trim();
+        if (await EmailExistsAsync(normalised))
+            return (false, "An account with this email already exists.");
+
+        var user = new Models.User
+        {
+            Name = name.Trim(),
+            Email = normalised,
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
+            Role = role,
+            IsActive = isActive,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        try
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return (true, null);
+        }
+        catch (DbUpdateException)
+        {
+            return (false, "Failed to create user. Please try again.");
+        }
+    }
 }

@@ -1,7 +1,5 @@
 @* AdminDashboard.razor — admin home panel *@
 @page "/admin"
-@inject AuthSession Auth
-@inject NavigationManager Nav
 
 <PageTitle>Admin Panel — PwnLearn</PageTitle>
 
@@ -35,11 +33,3 @@
         </div>
     }
 </div>
-
-@code {
-    protected override void OnInitialized()
-    {
-        if (!Auth.IsAuthenticated || !Auth.IsAdmin)
-            Nav.NavigateTo("/auth/login");
-    }
-}

@@ -1,2 +1,0 @@
-wwwroot\assets\.gitkeep
-wwwroot\css\app.css

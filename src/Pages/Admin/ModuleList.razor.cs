@@ -1,33 +1,31 @@
-// CourseList.razor.cs
+// ModuleList.razor.cs
 using Microsoft.AspNetCore.Components;
 using PwnLearn.Models;
 using PwnLearn.Services;
 
 namespace PwnLearn.Pages.Admin;
 
-public partial class CourseList : ComponentBase
+public partial class ModuleList : ComponentBase
 {
-    // =====Injected services
     [Inject] private AuthSession Auth { get; set; } = default!;
+    [Inject] private IModuleService ModuleService { get; set; } = default!;
     [Inject] private ICourseService CourseService { get; set; } = default!;
     [Inject] private NavigationManager Nav { get; set; } = default!;
 
-    // =====Query parameters
+    [Parameter] public int CourseId { get; set; }
+
     [SupplyParameterFromQuery(Name = "status")]
     private string? Status { get; set; }
 
-    // =====State
-    private List<Course>? _courses;
+    private Course? _course;
+    private List<Module>? _modules;
     private bool _isLoading = true;
     private string? _feedback;
     private string _feedbackType = "success";
-
-    // Delete dialog state
     private bool _showConfirm;
     private int _deleteId;
     private string _deleteTitle = string.Empty;
 
-    // =====Lifecycle
     protected override void OnInitialized()
     {
         if (!Auth.IsAuthenticated || !Auth.IsAdmin)
@@ -37,15 +35,25 @@ public partial class CourseList : ComponentBase
     protected override async Task OnInitializedAsync()
     {
         if (!Auth.IsAdmin) return;
-        await LoadCoursesAsync();
-        if (Status == "created")
+
+        _course = await CourseService.GetByIdAsync(CourseId);
+        if (_course is null)
         {
-            _feedback = "Course created successfully.";
-            _feedbackType = "success";
+            Nav.NavigateTo("/admin/courses");
+            return;
         }
+
+        await LoadModulesAsync();
+
+        _feedback = Status switch
+        {
+            "created" => "Module created successfully.",
+            "updated" => "Module updated successfully.",
+            _ => null
+        };
+        _feedbackType = "success";
     }
 
-    // =====Event handlers
     private void ConfirmDelete(int id, string title)
     {
         _deleteId = id;
@@ -56,30 +64,18 @@ public partial class CourseList : ComponentBase
     private async Task ExecuteDelete()
     {
         _showConfirm = false;
-        var success = await CourseService.DeleteAsync(_deleteId);
-        if (success)
-        {
-            _feedback = $"Course '{_deleteTitle}' deleted.";
-            _feedbackType = "success";
-            await LoadCoursesAsync();
-        }
-        else
-        {
-            _feedback = "Delete failed. Please try again.";
-            _feedbackType = "danger";
-        }
+        var ok = await ModuleService.DeleteAsync(_deleteId);
+        _feedback = ok ? $"Module '{_deleteTitle}' deleted." : "Delete failed. Please try again.";
+        _feedbackType = ok ? "success" : "danger";
+        if (ok) await LoadModulesAsync();
     }
 
-    private void CancelDelete()
-    {
-        _showConfirm = false;
-    }
+    private void CancelDelete() => _showConfirm = false;
 
-    // =====Private helpers
-    private async Task LoadCoursesAsync()
+    private async Task LoadModulesAsync()
     {
         _isLoading = true;
-        _courses = await CourseService.GetAllAsync();
+        _modules = await ModuleService.GetByCourseAsync(CourseId);
         _isLoading = false;
     }
 }

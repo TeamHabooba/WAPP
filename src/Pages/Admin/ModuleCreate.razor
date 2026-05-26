@@ -1,0 +1,48 @@
+@* ModuleCreate.razor — admin form to create a new module *@
+@page "/admin/courses/{CourseId:int}/modules/create"
+
+<PageTitle>New Module — Admin</PageTitle>
+
+<div class="page-container">
+    @if (!Auth.IsAdmin)
+    {
+        <LoadingSpinner Label="Redirecting…" />
+    }
+    else
+    {
+        <header class="page-header">
+            <div>
+                <a href="/admin/courses/@CourseId/modules" class="link-back">← Modules</a>
+                <h1>New Module</h1>
+            </div>
+        </header>
+
+        <AlertBox Message="@_error" Type="danger" />
+
+        <div class="form-card">
+            <EditForm Model="_model" FormName="admin-module-create" OnValidSubmit="HandleCreate" novalidate>
+                <DataAnnotationsValidator />
+
+                <div class="form-group">
+                    <label>Title</label>
+                    <InputText class="form-input" @bind-Value="_model.Title" placeholder="Module title" />
+                    <ValidationMessage For="@(() => _model.Title)" class="form-error-msg" />
+                </div>
+
+                <div class="form-group">
+                    <label>Content</label>
+                    <InputTextArea class="form-input form-textarea" @bind-Value="_model.Content"
+                                   placeholder="Module learning content…" rows="10" />
+                    <ValidationMessage For="@(() => _model.Content)" class="form-error-msg" />
+                </div>
+
+                <div class="form-actions">
+                    <a href="/admin/courses/@CourseId/modules" class="btn-secondary">Cancel</a>
+                    <button type="submit" class="btn-primary" disabled="@_isSubmitting">
+                        @(_isSubmitting ? "Saving…" : "Create Module")
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    }
+</div>

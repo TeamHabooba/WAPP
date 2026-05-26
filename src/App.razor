@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PwnLearn — Cybersecurity E-Learning</title>
     <link rel="stylesheet" href="css/app.css" />
     <link rel="stylesheet" href="PwnLearn.styles.css" />
 </head>
 <body>
-    <Routes />
+    <Routes @rendermode="RenderMode.InteractiveServer" />
     <script src="_framework/blazor.web.js"></script>
 </body>
 </html>

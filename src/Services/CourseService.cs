@@ -1,4 +1,5 @@
 // CourseService.cs
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using PwnLearn.Data;
 using PwnLearn.Models;
@@ -9,10 +10,12 @@ namespace PwnLearn.Services;
 public class CourseService : ICourseService
 {
     private readonly AppDbContext _context;
+    private readonly ILogger<CourseService> _logger;
 
-    public CourseService(AppDbContext context)
+    public CourseService(AppDbContext context, ILogger<CourseService> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task<List<Course>> GetAllPublishedAsync()
@@ -39,28 +42,34 @@ public class CourseService : ICourseService
 
     public async Task<bool> CreateAsync(Course course)
     {
+        if (!TryPrepareCourse(course)) return false;
+
         try
         {
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
             return true;
         }
-        catch (DbUpdateException)
+        catch (DbUpdateException ex)
         {
+            _logger.LogError(ex, "Failed to create course.");
             return false;
         }
     }
 
     public async Task<bool> UpdateAsync(Course course)
     {
+        if (!TryPrepareCourse(course)) return false;
+
         try
         {
             _context.Courses.Update(course);
             await _context.SaveChangesAsync();
             return true;
         }
-        catch (DbUpdateException)
+        catch (DbUpdateException ex)
         {
+            _logger.LogError(ex, "Failed to update course {CourseId}.", course.Id);
             return false;
         }
     }
@@ -75,8 +84,9 @@ public class CourseService : ICourseService
             await _context.SaveChangesAsync();
             return true;
         }
-        catch (DbUpdateException)
+        catch (DbUpdateException ex)
         {
+            _logger.LogError(ex, "Failed to delete course {CourseId}.", id);
             return false;
         }
     }
@@ -127,5 +137,22 @@ public class CourseService : ICourseService
             await _context.SaveChangesAsync();
         }
         return true;
+    }
+
+    private static bool TryPrepareCourse(Course? course)
+    {
+        if (course is null) return false;
+
+        course.Title = course.Title?.Trim() ?? string.Empty;
+        course.Description = course.Description?.Trim() ?? string.Empty;
+        course.Category = course.Category?.Trim() ?? string.Empty;
+        course.Difficulty = course.Difficulty?.Trim() ?? string.Empty;
+        course.IconEmoji = string.IsNullOrWhiteSpace(course.IconEmoji) ? "🔐" : course.IconEmoji.Trim();
+
+        return Validator.TryValidateObject(
+            course,
+            new ValidationContext(course),
+            new List<ValidationResult>(),
+            validateAllProperties: true);
     }
 }

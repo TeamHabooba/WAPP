@@ -15,4 +15,5 @@ public interface IUserService
     Task<bool> UpdateAsync(Models.User user);
     Task<bool> DeleteAsync(int id);
     Task<bool> ToggleActiveAsync(int id);
+    Task<(bool Success, string? Error)> AdminCreateAsync(string name, string email, string password, string role, bool isActive);
 }

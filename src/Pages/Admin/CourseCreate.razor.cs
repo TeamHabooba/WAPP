@@ -44,7 +44,7 @@ public partial class CourseCreate : ComponentBase
 
         var success = await CourseService.CreateAsync(course);
         if (success)
-            Nav.NavigateTo("/admin/courses");
+            Nav.NavigateTo("/admin/courses?status=created");
         else
         {
             _error = "Failed to create course. Please try again.";
@@ -64,8 +64,10 @@ public partial class CourseCreate : ComponentBase
         public string Description { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Category is required.")]
+        [RegularExpression("^(Fundamentals|Tools|CTF)$", ErrorMessage = "Select a valid category.")]
         public string Category { get; set; } = string.Empty;
 
+        [RegularExpression("^(Beginner|Intermediate|Advanced)$", ErrorMessage = "Select a valid difficulty.")]
         public string Difficulty { get; set; } = "Beginner";
 
         [StringLength(8)]

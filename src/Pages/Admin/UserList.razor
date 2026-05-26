@@ -15,6 +15,7 @@
                 <a href="/admin" class="link-back">← Admin</a>
                 <h1>Users <span class="count">@(_users?.Count ?? 0)</span></h1>
             </div>
+            <a href="/admin/users/create" class="btn-primary">+ New User</a>
         </header>
 
         <AlertBox Message="@_feedback" Type="@_feedbackType" />
@@ -56,14 +57,22 @@
                                 <span class="badge badge-@user.Role.ToLower()">@user.Role</span>
                             </td>
                             <td>
-                                <button class="toggle-btn @(user.IsActive ? "active" : "inactive")"
-                                        @onclick="() => ToggleUser(user.Id)"
-                                        title="@(user.IsActive ? "Deactivate" : "Activate")">
-                                    @(user.IsActive ? "Active" : "Inactive")
-                                </button>
+                                @if (user.Id == Auth.CurrentUser!.Id)
+                                {
+                                    <span class="badge badge-success">Active</span>
+                                }
+                                else
+                                {
+                                    <button class="toggle-btn @(user.IsActive ? "active" : "inactive")"
+                                            @onclick="() => ToggleUser(user.Id)"
+                                            title="@(user.IsActive ? "Deactivate" : "Activate")">
+                                        @(user.IsActive ? "Active" : "Inactive")
+                                    </button>
+                                }
                             </td>
                             <td class="td-date">@user.CreatedAt.ToLocalTime().ToString("dd MMM yyyy")</td>
                             <td class="td-actions">
+                                <a href="/admin/users/edit/@user.Id" class="btn-edit">Edit</a>
                                 @if (user.Id != Auth.CurrentUser!.Id)
                                 {
                                     <button class="btn-delete"
