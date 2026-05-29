@@ -17,8 +17,10 @@ public partial class Register : ComponentBase
     private string? _errorMessage;
     private string? _successMessage;
     private bool _isSubmitting;
+    private bool _submitted;
     private bool _registered;
 
+    // =====Lifecycle
     protected override void OnInitialized()
     {
         if (Auth.IsAuthenticated)
@@ -28,6 +30,7 @@ public partial class Register : ComponentBase
     // =====Event handlers
     private async Task HandleRegister()
     {
+        _submitted = true;
         _isSubmitting = true;
         _errorMessage = null;
 
