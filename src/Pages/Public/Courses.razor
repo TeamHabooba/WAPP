@@ -1,18 +1,20 @@
 @* Courses.razor — public course catalogue *@
 @page "/courses"
+
 @inject ICourseService CourseService
 @inject AuthSession Auth
 @inject NavigationManager Nav
 
+
 <PageTitle>Courses — PwnLearn</PageTitle>
+
 
 <div class="page-container">
     <header class="page-header">
         <h1>Course Catalogue</h1>
         <p class="page-subtitle">Structured cybersecurity learning — from fundamentals to advanced toolchains.</p>
     </header>
-
-    @* Filter bar *@
+    @* Filter Bar *@
     <div class="filter-bar">
         <input class="search-input" type="search" placeholder="Search courses…"
                @bind="_search" @bind:event="oninput" aria-label="Search courses" />
@@ -29,7 +31,6 @@
             <option value="Advanced">Advanced</option>
         </select>
     </div>
-
     @if (_courses is null)
     {
         <LoadingSpinner />
@@ -51,12 +52,12 @@
     }
 </div>
 
+
 @code {
     private List<Course>? _courses;
     private string _search = string.Empty;
     private string _filterCategory = string.Empty;
     private string _filterDifficulty = string.Empty;
-
     private List<Course> Filtered => (_courses ?? new())
         .Where(c =>
             (string.IsNullOrWhiteSpace(_search) || c.Title.Contains(_search, StringComparison.OrdinalIgnoreCase) || c.Description.Contains(_search, StringComparison.OrdinalIgnoreCase)) &&

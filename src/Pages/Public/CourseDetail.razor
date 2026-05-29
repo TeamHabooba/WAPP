@@ -1,9 +1,12 @@
 @* CourseDetail.razor — public preview of a single course *@
 @page "/courses/{Id:int}"
+
 @inject ICourseService CourseService
 @inject NavigationManager Nav
 
+
 <PageTitle>@(_course?.Title ?? "Course") — PwnLearn</PageTitle>
+
 
 <div class="page-container">
     @if (_course is null)
@@ -22,11 +25,10 @@
                 <span class="badge badge-outline">@_course.Modules.Count modules</span>
             </div>
             <p class="course-detail-desc">@_course.Description</p>
-            <a href="/auth/register" class="btn-primary btn-lg">Register to Enrol</a>
+            <a href="/auth/register" class="btn-primary btn-lg">Register to Enroll</a>
         </div>
-
         <section class="section">
-            <h2>What's Inside</h2>
+            <h2>What's Inside?</h2>
             <ol class="module-list">
                 @foreach (var module in _course.Modules.OrderBy(m => m.OrderIndex))
                 {
@@ -45,6 +47,7 @@
         </section>
     }
 </div>
+
 
 @code {
     [Parameter] public int Id { get; set; }
