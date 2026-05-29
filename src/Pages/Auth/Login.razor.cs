@@ -16,6 +16,7 @@ public partial class Login : ComponentBase
     private readonly LoginModel _model = new();
     private string? _errorMessage;
     private bool _isSubmitting;
+    private bool _submitted;
 
     // =====Lifecycle
     protected override void OnInitialized()
@@ -28,6 +29,7 @@ public partial class Login : ComponentBase
     // =====Event handlers
     private async Task HandleLogin()
     {
+        _submitted = true;
         _isSubmitting = true;
         _errorMessage = null;
 
