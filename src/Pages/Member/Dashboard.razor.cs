@@ -1,9 +1,12 @@
 // Dashboard.razor.cs
 using Microsoft.AspNetCore.Components;
+
 using PwnLearn.Models;
 using PwnLearn.Services;
 
+
 namespace PwnLearn.Pages.Member;
+
 
 public partial class Dashboard : ComponentBase
 {
@@ -24,25 +27,26 @@ public partial class Dashboard : ComponentBase
     protected override void OnInitialized()
     {
         if (!Auth.IsAuthenticated)
-            Nav.NavigateTo("/auth/login");
+        { 
+            Nav.NavigateTo("/auth/login"); 
+        }
     }
 
     protected override async Task OnInitializedAsync()
     {
-        if (!Auth.IsAuthenticated) return;
-
+        if (!Auth.IsAuthenticated)
+        {
+            return;
+        }
         var userId = Auth.CurrentUser!.Id;
         _enrollments = await CourseService.GetUserEnrollmentsAsync(userId);
         _quizAttempts = await QuizService.GetUserAttemptsAsync(userId);
-
         _totalCompleted = _enrollments.Sum(e => e.CompletedModules);
-
         if (_quizAttempts.Count > 0)
         {
             var best = _quizAttempts.OrderByDescending(a => (double)a.Score / a.TotalQuestions).First();
             _bestScore = $"{best.Score}/{best.TotalQuestions}";
         }
-
         _isLoading = false;
     }
 }

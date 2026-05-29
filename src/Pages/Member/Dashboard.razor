@@ -1,7 +1,9 @@
 @* Dashboard.razor — member learning dashboard *@
 @page "/member/dashboard"
 
+
 <PageTitle>Dashboard — PwnLearn</PageTitle>
+
 
 <div class="page-container">
     @if (!Auth.IsAuthenticated)
@@ -17,7 +19,6 @@
                 <p class="page-subtitle">Track your learning progress and pick up where you left off.</p>
             </div>
         </header>
-
         @* Stats row *@
         <div class="stats-row">
             <StatCard Icon="📚" Value="@_enrollments.Count.ToString()" Label="Enrolled Courses" />
@@ -25,14 +26,12 @@
             <StatCard Icon="🧠" Value="@_quizAttempts.Count.ToString()" Label="Quiz Attempts" />
             <StatCard Icon="🏆" Value="@_bestScore" Label="Best Quiz Score" />
         </div>
-
         @* My courses *@
         <section class="section">
             <div class="section-header">
                 <h2>My Courses</h2>
                 <a href="/courses" class="link-muted">Browse more →</a>
             </div>
-
             @if (_isLoading)
             {
                 <LoadingSpinner />
@@ -67,7 +66,6 @@
                 </div>
             }
         </section>
-
         @* Recent quiz attempts *@
         @if (_quizAttempts.Count > 0)
         {

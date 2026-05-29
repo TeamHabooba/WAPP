@@ -1,7 +1,9 @@
 @* CourseView.razor — authenticated member course viewer with module reader and quiz *@
 @page "/member/course/{CourseId:int}"
 
+
 <PageTitle>@(_course?.Title ?? "Course") — PwnLearn</PageTitle>
+
 
 <div class="page-container">
     @if (!Auth.IsAuthenticated)
@@ -19,7 +21,6 @@
     else
     {
         <a href="/member/dashboard" class="link-back">← Dashboard</a>
-
         <div class="course-view-layout">
             @* Sidebar — module list *@
             <aside class="course-sidebar">
@@ -40,13 +41,11 @@
                         }
                     </ol>
                 </nav>
-
                 @if (!_isEnrolled)
                 {
                     <button class="btn-primary btn-full" @onclick="EnrollAsync">Enrol in Course</button>
                 }
             </aside>
-
             @* Main panel *@
             <main class="course-main">
                 @if (_activeModule is null)
@@ -82,13 +81,11 @@
                         }
                         <AlertBox Message="@_moduleMsg" Type="@_moduleMsgType" />
                     </article>
-
                     @* Quiz section *@
                     @if (_questions.Count > 0)
                     {
                         <section class="quiz-section">
                             <h3>🧠 Module Quiz</h3>
-
                             @if (_quizSubmitted)
                             {
                                 <div class="quiz-result">
@@ -148,7 +145,6 @@
                 }
             </main>
         </div>
-
         <AlertBox Message="@_enrollMsg" Type="@_enrollMsgType" />
     }
 </div>

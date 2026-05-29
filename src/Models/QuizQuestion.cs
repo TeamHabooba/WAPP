@@ -1,7 +1,7 @@
 // QuizQuestion.cs
 namespace PwnLearn.Models;
 
-/// <summary>A multiple-choice question attached to a module.</summary>
+/// <summary>A multiple-choice question attached to a module. 4 choices max.</summary>
 public class QuizQuestion
 {
     public int Id { get; set; }

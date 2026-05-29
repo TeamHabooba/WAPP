@@ -1,9 +1,12 @@
 // CourseView.razor.cs
 using Microsoft.AspNetCore.Components;
+
 using PwnLearn.Models;
 using PwnLearn.Services;
 
+
 namespace PwnLearn.Pages.Member;
+
 
 public partial class CourseView : ComponentBase
 {
@@ -46,15 +49,16 @@ public partial class CourseView : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        if (!Auth.IsAuthenticated) return;
-
+        if (!Auth.IsAuthenticated)
+        { 
+            return; 
+        }
         _course = await CourseService.GetWithModulesAsync(CourseId);
         if (_course is null)
         {
             _isLoading = false;
             return;
         }
-
         _isEnrolled = await CourseService.IsEnrolledAsync(Auth.CurrentUser!.Id, CourseId);
         _isLoading = false;
     }
@@ -64,16 +68,11 @@ public partial class CourseView : ComponentBase
     {
         _activeModuleId = moduleId;
         _activeModule = _course?.Modules.FirstOrDefault(m => m.Id == moduleId);
-
-        // Reset quiz state for the newly selected module
-        _questions = new();
-        _answers = new();
-        _quizSubmitted = false;
-        _quizScore = 0;
-        _moduleMsg = null;
-
+        ResetQuizHard();
         if (_activeModule is not null)
+        {
             _questions = await QuizService.GetQuestionsForModuleAsync(moduleId);
+        }
     }
 
     private async Task EnrollAsync()
@@ -94,7 +93,10 @@ public partial class CourseView : ComponentBase
 
     private async Task MarkComplete()
     {
-        if (!_isEnrolled) return;
+        if (!_isEnrolled) 
+        { 
+            return; 
+        }
         await CourseService.IncrementProgressAsync(Auth.CurrentUser!.Id, CourseId);
         _moduleMsg = "Module marked as complete ✓";
         _moduleMsgType = "success";
@@ -115,9 +117,10 @@ public partial class CourseView : ComponentBase
                 _quizScore++;
         }
         _quizSubmitted = true;
-
         if (_activeModule is not null)
+        {
             await QuizService.SaveAttemptAsync(Auth.CurrentUser!.Id, _activeModule.Id, _quizScore, _questions.Count);
+        }
     }
 
     private void ResetQuiz()
@@ -125,5 +128,14 @@ public partial class CourseView : ComponentBase
         _answers = new();
         _quizSubmitted = false;
         _quizScore = 0;
+    }
+
+    private void ResetQuizHard()
+    {
+        _questions = new();
+        _answers = new();
+        _quizSubmitted = false;
+        _quizScore = 0;
+        _moduleMsg = null;
     }
 }
