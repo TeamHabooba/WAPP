@@ -1,8 +1,11 @@
 // UserService.cs
 using Microsoft.EntityFrameworkCore;
+
 using PwnLearn.Data;
 
+
 namespace PwnLearn.Services;
+
 
 /// <summary>Implements user data operations using EF Core.</summary>
 public class UserService : IUserService
@@ -41,7 +44,6 @@ public class UserService : IUserService
         var normalised = email.ToLower().Trim();
         if (await EmailExistsAsync(normalised))
             return (false, "An account with this email already exists.");
-
         var user = new Models.User
         {
             Name = name.Trim(),
@@ -51,7 +53,6 @@ public class UserService : IUserService
             IsActive = true,
             CreatedAt = DateTime.UtcNow
         };
-
         try
         {
             _context.Users.Add(user);
@@ -105,20 +106,20 @@ public class UserService : IUserService
     public async Task<(bool Success, string? Error)> AdminCreateAsync(
         string name, string email, string password, string role, bool isActive)
     {
-        var normalised = email.ToLower().Trim();
-        if (await EmailExistsAsync(normalised))
+        var normalisedEmail = email.ToLower().Trim();
+        if (await EmailExistsAsync(normalisedEmail))
+        {
             return (false, "An account with this email already exists.");
-
+        }
         var user = new Models.User
         {
             Name = name.Trim(),
-            Email = normalised,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
+            Email = normalisedEmail,
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(password), // Password hashig for extra sensitive data protection
             Role = role,
             IsActive = isActive,
             CreatedAt = DateTime.UtcNow
         };
-
         try
         {
             _context.Users.Add(user);

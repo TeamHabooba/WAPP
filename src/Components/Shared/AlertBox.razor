@@ -1,5 +1,6 @@
 @* AlertBox.razor — reusable alert/feedback message box *@
 
+
 @if (!string.IsNullOrEmpty(Message))
 {
     <div class="alert alert-@Type" role="alert">
@@ -7,6 +8,7 @@
         <span>@Message</span>
     </div>
 }
+
 
 @code {
     /// <summary>The message to display. Empty/null hides the component.</summary>

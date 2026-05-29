@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using PwnLearn.Data;
 using PwnLearn.Models;
 
+
 namespace PwnLearn.Services;
+
 
 /// <summary>Handles quiz data retrieval and attempt recording.</summary>
 public class QuizService : IQuizService
@@ -18,9 +20,7 @@ public class QuizService : IQuizService
     }
 
     public async Task<List<QuizQuestion>> GetQuestionsForModuleAsync(int moduleId)
-        => await _context.QuizQuestions
-            .Where(q => q.ModuleId == moduleId)
-            .ToListAsync();
+        => await _context.QuizQuestions.Where(q => q.ModuleId == moduleId).ToListAsync();
 
     public async Task<bool> SaveAttemptAsync(int userId, int moduleId, int score, int total)
     {
@@ -55,6 +55,7 @@ public class QuizService : IQuizService
             .Where(a => a.UserId == userId && a.ModuleId == moduleId)
             .OrderByDescending(a => a.Score)
             .FirstOrDefaultAsync();
+
 
     // =====Admin CRUD
 

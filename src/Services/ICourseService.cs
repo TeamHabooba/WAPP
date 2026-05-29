@@ -1,7 +1,9 @@
 // ICourseService.cs
 using PwnLearn.Models;
 
+
 namespace PwnLearn.Services;
+
 
 /// <summary>Contract for course catalogue and enrolment operations.</summary>
 public interface ICourseService
@@ -10,6 +12,7 @@ public interface ICourseService
     Task<List<Course>> GetAllAsync();
     Task<Course?> GetByIdAsync(int id);
     Task<Course?> GetWithModulesAsync(int id);
+
     Task<bool> CreateAsync(Course course);
     Task<bool> UpdateAsync(Course course);
     Task<bool> DeleteAsync(int id);

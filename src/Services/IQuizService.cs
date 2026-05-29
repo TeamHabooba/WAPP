@@ -1,7 +1,9 @@
 // IQuizService.cs
 using PwnLearn.Models;
 
+
 namespace PwnLearn.Services;
+
 
 /// <summary>Contract for quiz / self-assessment operations.</summary>
 public interface IQuizService
@@ -11,7 +13,8 @@ public interface IQuizService
     Task<List<QuizAttempt>> GetUserAttemptsAsync(int userId);
     Task<QuizAttempt?> GetBestAttemptAsync(int userId, int moduleId);
 
-    // Admin CRUD
+    // =====Admin CRUD
+
     Task<QuizQuestion?> GetQuestionByIdAsync(int id);
     Task<bool> CreateQuestionAsync(QuizQuestion question);
     Task<bool> UpdateQuestionAsync(QuizQuestion question);

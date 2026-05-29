@@ -1,44 +1,38 @@
 @* Login.razor — member/admin login page *@
 @page "/auth/login"
 
+
 <PageTitle>Login — PwnLearn</PageTitle>
+
 
 <div class="auth-wrapper">
     <div class="auth-card">
         <div class="auth-card__logo">🔐</div>
         <h1 class="auth-card__title">Welcome Back</h1>
         <p class="auth-card__sub">Log in to access your learning dashboard.</p>
-
         <AlertBox Message="@_errorMessage" Type="danger" />
-
         <EditForm Model="_model" FormName="login" OnValidSubmit="HandleLogin" novalidate>
             <DataAnnotationsValidator />
-
             <div class="form-group">
                 <label for="email">Email</label>
-                <InputText id="email" class="form-input" @bind-Value="_model.Email"
-                           placeholder="you@example.com" autocomplete="email" />
+                <InputText id="email" class="form-input" @bind-Value="_model.Email" placeholder="you@example.com" autocomplete="email" />
                 @if (_submitted)
                 {
                     <ValidationMessage For="@(() => _model.Email)" class="form-error-msg" />
                 }
             </div>
-
             <div class="form-group">
                 <label for="password">Password</label>
-                <InputText id="password" class="form-input" type="password"
-                           @bind-Value="_model.Password" placeholder="••••••••" autocomplete="current-password" />
+                <InputText id="password" class="form-input" type="password" @bind-Value="_model.Password" placeholder="••••••••" autocomplete="current-password" />
                 @if (_submitted)
                 {
                     <ValidationMessage For="@(() => _model.Password)" class="form-error-msg" />
                 }
             </div>
-
             <button type="submit" class="btn-primary btn-full" disabled="@_isSubmitting">
                 @(_isSubmitting ? "Logging in…" : "Log In")
             </button>
         </EditForm>
-
         <p class="auth-card__footer">
             Don't have an account? <a href="/auth/register">Register free</a>
         </p>

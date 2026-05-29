@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using PwnLearn.Data;
 using PwnLearn.Models;
 
+
 namespace PwnLearn.Services;
+
 
 public class ModuleService : IModuleService
 {
@@ -35,7 +37,6 @@ public class ModuleService : IModuleService
                 .Select(m => (int?)m.OrderIndex)
                 .MaxAsync() ?? 0;
             module.OrderIndex = maxOrder + 1;
-
             _context.Modules.Add(module);
             await _context.SaveChangesAsync();
             return true;

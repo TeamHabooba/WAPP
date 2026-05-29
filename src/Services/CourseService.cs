@@ -1,10 +1,14 @@
 // CourseService.cs
 using System.ComponentModel.DataAnnotations;
+
 using Microsoft.EntityFrameworkCore;
+
 using PwnLearn.Data;
 using PwnLearn.Models;
 
+
 namespace PwnLearn.Services;
+
 
 /// <summary>Implements course catalogue and enrolment data operations.</summary>
 public class CourseService : ICourseService
@@ -59,8 +63,10 @@ public class CourseService : ICourseService
 
     public async Task<bool> UpdateAsync(Course course)
     {
-        if (!TryPrepareCourse(course)) return false;
-
+        if (!TryPrepareCourse(course))
+        { 
+            return false; 
+        }
         try
         {
             _context.Courses.Update(course);
@@ -79,7 +85,10 @@ public class CourseService : ICourseService
         try
         {
             var course = await _context.Courses.FindAsync(id);
-            if (course is null) return false;
+            if (course is null)
+            { 
+                return false; 
+            }
             _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
             return true;
@@ -90,6 +99,7 @@ public class CourseService : ICourseService
             return false;
         }
     }
+
 
     // =====Enrolment
 
@@ -126,10 +136,11 @@ public class CourseService : ICourseService
 
     public async Task<bool> IncrementProgressAsync(int userId, int courseId)
     {
-        var enrollment = await _context.Enrollments
-            .FirstOrDefaultAsync(e => e.UserId == userId && e.CourseId == courseId);
-        if (enrollment is null) return false;
-
+        var enrollment = await _context.Enrollments.FirstOrDefaultAsync(e => e.UserId == userId && e.CourseId == courseId);
+        if (enrollment is null)
+        { 
+            return false; 
+        }
         var totalModules = await _context.Modules.CountAsync(m => m.CourseId == courseId);
         if (enrollment.CompletedModules < totalModules)
         {
@@ -141,14 +152,15 @@ public class CourseService : ICourseService
 
     private static bool TryPrepareCourse(Course? course)
     {
-        if (course is null) return false;
-
+        if (course is null)
+        {
+            return false;
+        }
         course.Title = course.Title?.Trim() ?? string.Empty;
         course.Description = course.Description?.Trim() ?? string.Empty;
         course.Category = course.Category?.Trim() ?? string.Empty;
         course.Difficulty = course.Difficulty?.Trim() ?? string.Empty;
         course.IconEmoji = string.IsNullOrWhiteSpace(course.IconEmoji) ? "🔐" : course.IconEmoji.Trim();
-
         return Validator.TryValidateObject(
             course,
             new ValidationContext(course),

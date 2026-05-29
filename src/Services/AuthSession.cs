@@ -1,6 +1,7 @@
 // AuthSession.cs
 namespace PwnLearn.Services;
 
+
 /// <summary>
 /// Scoped service that holds the currently authenticated user for the Blazor Server circuit.
 /// Replaces ASP.NET Core Identity for this project.

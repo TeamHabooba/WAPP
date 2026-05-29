@@ -1,10 +1,11 @@
 /* ==========================================================
-   PwnLearn — Global Stylesheet
+   PwnLearn (Group 30 WAPP Assignment) Global Stylesheet
    External CSS (required method 1 of 3)
    app.css — maintained by Alex (TP081705)
    ========================================================== */
 
-/* =====CSS Custom Properties (Design Tokens) */
+
+/* =====CSS Custom Properties */
 :root {
     --bg:           #0d1117;
     --bg-alt:       #161b22;
@@ -29,6 +30,7 @@
     --transition:   0.18s ease;
 }
 
+
 /* =====Reset & Base */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -49,6 +51,7 @@ a { color: var(--accent); text-decoration: none; }
 a:hover { color: var(--accent-hover); text-decoration: underline; }
 
 img { max-width: 100%; display: block; }
+
 
 /* =====Navbar */
 .navbar {
@@ -113,6 +116,7 @@ img { max-width: 100%; display: block; }
 .btn-nav:hover { background: var(--accent-hover) !important; text-decoration: none !important; }
 
 .navbar__toggle { display: none; }
+
 
 /* =====Main & Footer */
 .main-content { flex: 1; }
@@ -197,6 +201,7 @@ img { max-width: 100%; display: block; }
 }
 .hero__cta { display: flex; gap: 0.8rem; flex-wrap: wrap; }
 
+
 /* =====Terminal widget */
 .hero__visual { flex: 0 0 380px; }
 
@@ -236,6 +241,7 @@ img { max-width: 100%; display: block; }
 
 .t-green  { color: var(--green); }
 .t-yellow { color: var(--yellow); }
+
 
 /* =====Stats bar */
 .stats-bar {
@@ -309,6 +315,7 @@ img { max-width: 100%; display: block; }
 .btn-sm  { padding: 0.3rem 0.8rem; font-size: 0.83rem; }
 .btn-full { width: 100%; }
 
+
 /* =====Course cards grid */
 .courses-grid {
     display: grid;
@@ -343,6 +350,7 @@ img { max-width: 100%; display: block; }
 }
 .course-card__modules { font-size: 0.82rem; color: var(--text-muted); }
 
+
 /* =====Features grid */
 .features-grid {
     display: grid;
@@ -362,6 +370,7 @@ img { max-width: 100%; display: block; }
 .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
 .feature-card p { font-size: 0.88rem; color: var(--text-muted); }
 
+
 /* =====CTA Banner */
 .cta-banner {
     text-align: center;
@@ -374,6 +383,7 @@ img { max-width: 100%; display: block; }
 }
 .cta-banner h2 { font-size: 1.8rem; margin-bottom: 0.75rem; }
 .cta-banner p  { color: var(--text-muted); margin-bottom: 1.5rem; }
+
 
 /* =====Badges */
 .badge {
@@ -397,6 +407,7 @@ img { max-width: 100%; display: block; }
 .badge-user        { background: var(--accent-dim); color: var(--accent); }
 
 .badge-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin: 0.5rem 0; }
+
 
 /* =====Alert box */
 .alert {
@@ -429,6 +440,7 @@ img { max-width: 100%; display: block; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .spinner-label { color: var(--text-muted); font-size: 0.9rem; }
 
+
 /* =====Stat Cards */
 .stats-row {
     display: grid;
@@ -449,6 +461,7 @@ img { max-width: 100%; display: block; }
 .stat-card__icon { font-size: 1.8rem; }
 .stat-card__value { font-size: 1.6rem; font-weight: 700; color: var(--accent); display: block; }
 .stat-card__label { font-size: 0.82rem; color: var(--text-muted); }
+
 
 /* =====Auth cards */
 .auth-wrapper {
@@ -476,6 +489,7 @@ img { max-width: 100%; display: block; }
 .auth-card__title { font-size: 1.6rem; font-weight: 700; text-align: center; }
 .auth-card__sub { color: var(--text-muted); text-align: center; font-size: 0.92rem; }
 .auth-card__footer { text-align: center; font-size: 0.88rem; color: var(--text-muted); }
+
 
 /* =====Forms */
 .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
@@ -524,6 +538,7 @@ img { max-width: 100%; display: block; }
     gap: 1.1rem;
 }
 
+
 /* =====Filter bar */
 .filter-bar {
     display: flex;
@@ -546,6 +561,7 @@ img { max-width: 100%; display: block; }
     width: 100%;
 }
 .search-input:focus { outline: none; border-color: var(--accent); }
+
 
 /* =====Table */
 .user-table {
@@ -611,6 +627,7 @@ img { max-width: 100%; display: block; }
 .toggle-btn.inactive { background: var(--red-dim);   color: var(--red); }
 .toggle-btn:hover { opacity: 0.75; }
 
+
 /* =====Modal */
 .modal-backdrop {
     position: fixed; inset: 0;
@@ -640,9 +657,11 @@ img { max-width: 100%; display: block; }
 .modal h2 { font-size: 1.2rem; }
 .modal-actions { display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 0.3rem; }
 
+
 /* =====Status / Empty */
 .status-msg { text-align: center; color: var(--text-muted); padding: 3rem; }
 .empty-state { text-align: center; padding: 3rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; color: var(--text-muted); }
+
 
 /* =====Admin nav grid */
 .admin-nav-grid {
@@ -752,6 +771,7 @@ img { max-width: 100%; display: block; }
     font-size: 0.72rem; font-weight: 700; flex-shrink: 0;
 }
 
+
 /* =====Module reader */
 .module-reader {
     background: var(--surface);
@@ -775,6 +795,7 @@ img { max-width: 100%; display: block; }
     gap: 1rem;
 }
 .course-welcome h1 { font-size: 1.8rem; font-weight: 800; }
+
 
 /* =====Quiz */
 .quiz-section {
@@ -826,6 +847,7 @@ img { max-width: 100%; display: block; }
 .quiz-answer.wrong   { background: var(--red-dim);   border-color: rgba(248,81,73,0.3); }
 .quiz-explanation    { color: var(--text-muted); font-style: italic; margin-top: 0.2rem; }
 
+
 /* =====Enrollment cards */
 .enrollment-list { display: flex; flex-direction: column; gap: 0.9rem; }
 .enrollment-card {
@@ -853,6 +875,7 @@ img { max-width: 100%; display: block; }
     border-radius: 3px;
     transition: width 0.4s ease;
 }
+
 
 /* =====About page */
 .about-lead {
@@ -898,6 +921,7 @@ img { max-width: 100%; display: block; }
 .tool-card p  { font-size: 0.88rem; color: var(--text-muted); flex: 1; }
 .link-external { font-size: 0.85rem; color: var(--accent); }
 
+
 /* =====Misc helpers */
 .link-back { display: inline-block; color: var(--text-muted); font-size: 0.88rem; margin-bottom: 0.8rem; }
 .link-back:hover { color: var(--accent); }
@@ -927,6 +951,7 @@ img { max-width: 100%; display: block; }
     gap: 1rem;
 }
 .not-found h1 { font-size: 5rem; font-weight: 900; color: var(--accent); }
+
 
 /* =====Responsive */
 @media (max-width: 860px) {
