@@ -1,9 +1,12 @@
 // UserList.razor.cs
 using Microsoft.AspNetCore.Components;
+
 using PwnLearn.Models;
 using PwnLearn.Services;
 
+
 namespace PwnLearn.Pages.Admin;
+
 
 public partial class UserList : ComponentBase
 {
@@ -36,15 +39,13 @@ public partial class UserList : ComponentBase
         .ToList();
 
     // =====Lifecycle
-    protected override void OnInitialized()
-    {
-        if (!Auth.IsAuthenticated || !Auth.IsAdmin)
-            Nav.NavigateTo("/auth/login");
-    }
-
     protected override async Task OnInitializedAsync()
     {
-        if (!Auth.IsAdmin) return;
+        if (!Auth.IsAuthenticated)
+        {
+            Nav.NavigateTo("/auth/login", replace: true);
+            return;
+        }
         await LoadUsersAsync();
         _feedback = Status switch
         {

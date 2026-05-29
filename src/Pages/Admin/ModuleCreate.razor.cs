@@ -1,8 +1,11 @@
 // ModuleCreate.razor.cs
 using System.ComponentModel.DataAnnotations;
+
 using Microsoft.AspNetCore.Components;
+
 using PwnLearn.Models;
 using PwnLearn.Services;
+
 
 namespace PwnLearn.Pages.Admin;
 
@@ -18,10 +21,13 @@ public partial class ModuleCreate : ComponentBase
     private string? _error;
     private bool _isSubmitting;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        if (!Auth.IsAuthenticated || !Auth.IsAdmin)
-            Nav.NavigateTo("/auth/login");
+        if (!Auth.IsAuthenticated)
+        {
+            Nav.NavigateTo("/auth/login", replace: true);
+            return;
+        }
     }
 
     private async Task HandleCreate()

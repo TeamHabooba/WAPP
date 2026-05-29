@@ -1,10 +1,14 @@
 // QuestionList.razor.cs
 using System.Text.Json;
+
 using Microsoft.AspNetCore.Components;
+
 using PwnLearn.Models;
 using PwnLearn.Services;
 
+
 namespace PwnLearn.Pages.Admin;
+
 
 public partial class QuestionList : ComponentBase
 {
@@ -26,25 +30,20 @@ public partial class QuestionList : ComponentBase
     private bool _showConfirm;
     private int _deleteId;
 
-    protected override void OnInitialized()
-    {
-        if (!Auth.IsAuthenticated || !Auth.IsAdmin)
-            Nav.NavigateTo("/auth/login");
-    }
-
     protected override async Task OnInitializedAsync()
     {
-        if (!Auth.IsAdmin) return;
-
+        if (!Auth.IsAuthenticated)
+        {
+            Nav.NavigateTo("/auth/login", replace: true);
+            return;
+        }
         _module = await ModuleService.GetByIdAsync(ModuleId);
         if (_module is null)
         {
             Nav.NavigateTo("/admin/courses");
             return;
         }
-
         await LoadQuestionsAsync();
-
         _feedback = Status switch
         {
             "created" => "Question created successfully.",

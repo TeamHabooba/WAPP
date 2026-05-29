@@ -1,9 +1,13 @@
 // UserEdit.razor.cs
 using System.ComponentModel.DataAnnotations;
+
 using Microsoft.AspNetCore.Components;
+
 using PwnLearn.Services;
 
+
 namespace PwnLearn.Pages.Admin;
+
 
 public partial class UserEdit : ComponentBase
 {
@@ -19,23 +23,19 @@ public partial class UserEdit : ComponentBase
     private string? _error;
     private string? _success;
 
-    protected override void OnInitialized()
-    {
-        if (!Auth.IsAuthenticated || !Auth.IsAdmin)
-            Nav.NavigateTo("/auth/login");
-    }
-
     protected override async Task OnInitializedAsync()
     {
-        if (!Auth.IsAdmin) return;
-
+        if (!Auth.IsAuthenticated)
+        {
+            Nav.NavigateTo("/auth/login", replace: true);
+            return;
+        }
         var user = await UserService.GetByIdAsync(Id);
         if (user is null)
         {
             _isLoading = false;
             return;
         }
-
         _model = new UserEditModel
         {
             Name = user.Name,
@@ -52,7 +52,6 @@ public partial class UserEdit : ComponentBase
         _isSubmitting = true;
         _error = null;
         _success = null;
-
         var user = await UserService.GetByIdAsync(Id);
         if (user is null)
         {
@@ -60,7 +59,6 @@ public partial class UserEdit : ComponentBase
             _isSubmitting = false;
             return;
         }
-
         // Check for duplicate email (excluding current user)
         var existing = await UserService.GetByEmailAsync(_model.Email.ToLower().Trim());
         if (existing is not null && existing.Id != Id)
@@ -69,17 +67,14 @@ public partial class UserEdit : ComponentBase
             _isSubmitting = false;
             return;
         }
-
         user.Name = _model.Name.Trim();
         user.Email = _model.Email.ToLower().Trim();
-
         // Prevent admin from stripping their own privileges
         if (Id != Auth.CurrentUser!.Id)
         {
             user.Role = _model.Role;
             user.IsActive = _model.IsActive;
         }
-
         var ok = await UserService.UpdateAsync(user);
         if (ok)
             _success = "User updated successfully.";

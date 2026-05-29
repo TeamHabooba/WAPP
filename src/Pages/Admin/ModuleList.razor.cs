@@ -1,7 +1,9 @@
 // ModuleList.razor.cs
 using Microsoft.AspNetCore.Components;
+
 using PwnLearn.Models;
 using PwnLearn.Services;
+
 
 namespace PwnLearn.Pages.Admin;
 
@@ -26,15 +28,14 @@ public partial class ModuleList : ComponentBase
     private int _deleteId;
     private string _deleteTitle = string.Empty;
 
-    protected override void OnInitialized()
-    {
-        if (!Auth.IsAuthenticated || !Auth.IsAdmin)
-            Nav.NavigateTo("/auth/login");
-    }
 
     protected override async Task OnInitializedAsync()
     {
-        if (!Auth.IsAdmin) return;
+        if (!Auth.IsAuthenticated)
+        {
+            Nav.NavigateTo("/auth/login", replace: true);
+            return;
+        }
 
         _course = await CourseService.GetByIdAsync(CourseId);
         if (_course is null)

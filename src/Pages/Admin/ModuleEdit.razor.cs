@@ -1,7 +1,10 @@
 // ModuleEdit.razor.cs
 using System.ComponentModel.DataAnnotations;
+
 using Microsoft.AspNetCore.Components;
+
 using PwnLearn.Services;
+
 
 namespace PwnLearn.Pages.Admin;
 
@@ -20,15 +23,18 @@ public partial class ModuleEdit : ComponentBase
     private string? _error;
     private string? _success;
 
-    protected override void OnInitialized()
-    {
-        if (!Auth.IsAuthenticated || !Auth.IsAdmin)
-            Nav.NavigateTo("/auth/login");
-    }
+    /// <summary>
+    /// Deprecated.
+    /// </summary>
+    //protected override void OnInitialized();
 
     protected override async Task OnInitializedAsync()
     {
-        if (!Auth.IsAdmin) return;
+        if (!Auth.IsAuthenticated)
+        {
+            Nav.NavigateTo("/auth/login", replace: true);
+            return;
+        }
 
         var module = await ModuleService.GetByIdAsync(ModuleId);
         if (module is null || module.CourseId != CourseId)
