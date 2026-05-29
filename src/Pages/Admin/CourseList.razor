@@ -1,7 +1,9 @@
 @* CourseList.razor — admin course management list *@
 @page "/admin/courses"
 
+
 <PageTitle>Manage Courses — Admin</PageTitle>
+
 
 <div class="page-container">
     @if (!Auth.IsAdmin)
@@ -66,7 +68,6 @@
                 </tbody>
             </table>
         }
-
         <ConfirmDialog IsVisible="_showConfirm"
                        Title="Delete Course"
                        Message="@($"Delete '{_deleteTitle}'? All its modules will also be removed. This cannot be undone.")"

@@ -11,9 +11,9 @@ public partial class Logout : ComponentBase
     [Inject] private NavigationManager Nav { get; set; } = default!;
 
     // =====Lifecycle
-    protected override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
-        Auth.Logout();
+        await Auth.LogoutAsync();
         Nav.NavigateTo("/");
     }
 }

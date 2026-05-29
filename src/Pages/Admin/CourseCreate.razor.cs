@@ -19,10 +19,13 @@ public partial class CourseCreate : ComponentBase
     private bool _isSubmitting;
 
     // =====Lifecycle
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        if (!Auth.IsAuthenticated || !Auth.IsAdmin)
-            Nav.NavigateTo("/auth/login");
+        if (!Auth.IsAuthenticated)
+        {
+            Nav.NavigateTo("/auth/login", replace: true);
+            return;
+        }
     }
 
     // =====Event handlers

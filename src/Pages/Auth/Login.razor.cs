@@ -32,7 +32,6 @@ public partial class Login : ComponentBase
         _submitted = true;
         _isSubmitting = true;
         _errorMessage = null;
-
         var user = await UserService.AuthenticateAsync(_model.Email, _model.Password);
         if (user is null)
         {
@@ -40,8 +39,7 @@ public partial class Login : ComponentBase
             _isSubmitting = false;
             return;
         }
-
-        Auth.Login(user);
+        await Auth.LoginAsync(user);
         RedirectToHome();
     }
 

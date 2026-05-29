@@ -41,16 +41,16 @@ public partial class CourseView : ComponentBase
     private int _quizScore;
 
     // =====Lifecycle
-    protected override void OnInitialized()
-    {
-        if (!Auth.IsAuthenticated)
-            Nav.NavigateTo("/auth/login");
-    }
+    /// <summary>
+    /// Deprecated.
+    /// </summary>
+    //protected override void OnInitialized() => _ = OnInitializedAsync();
 
     protected override async Task OnInitializedAsync()
     {
         if (!Auth.IsAuthenticated)
         { 
+            Nav.NavigateTo("/auth/login");
             return; 
         }
         _course = await CourseService.GetWithModulesAsync(CourseId);

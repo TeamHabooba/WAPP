@@ -12,6 +12,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is missing.");
 
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
+// To save Auth state in localStorage
+builder.Services.AddScoped<Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage.ProtectedSessionStorage>();
 // EF Core — connection string from appsettings.json
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 // Register application services

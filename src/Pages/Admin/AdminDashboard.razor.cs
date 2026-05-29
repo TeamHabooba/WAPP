@@ -11,9 +11,12 @@ public partial class AdminDashboard : ComponentBase
     [Inject] private NavigationManager Nav { get; set; } = default!;
 
     // =====Lifecycle
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        if (!Auth.IsAuthenticated || !Auth.IsAdmin)
-            Nav.NavigateTo("/auth/login");
+        if (!Auth.IsAuthenticated)
+        {
+            Nav.NavigateTo("/auth/login", replace: true);
+            return;
+        }
     }
 }

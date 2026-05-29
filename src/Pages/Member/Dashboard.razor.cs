@@ -24,19 +24,17 @@ public partial class Dashboard : ComponentBase
     private bool _isLoading = true;
 
     // =====Lifecycle
-    protected override void OnInitialized()
-    {
-        if (!Auth.IsAuthenticated)
-        { 
-            Nav.NavigateTo("/auth/login"); 
-        }
-    }
+
+    /// <summary>
+    /// Deprecated.
+    /// </summary>
+    //protected override void OnInitialized() => _ = OnInitializedAsync();
 
     protected override async Task OnInitializedAsync()
     {
         if (!Auth.IsAuthenticated)
         {
-            return;
+            Nav.NavigateTo("/auth/login");
         }
         var userId = Auth.CurrentUser!.Id;
         _enrollments = await CourseService.GetUserEnrollmentsAsync(userId);

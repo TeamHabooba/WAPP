@@ -1,7 +1,9 @@
 // CourseList.razor.cs
 using Microsoft.AspNetCore.Components;
+
 using PwnLearn.Models;
 using PwnLearn.Services;
+
 
 namespace PwnLearn.Pages.Admin;
 
@@ -28,15 +30,18 @@ public partial class CourseList : ComponentBase
     private string _deleteTitle = string.Empty;
 
     // =====Lifecycle
-    protected override void OnInitialized()
-    {
-        if (!Auth.IsAuthenticated || !Auth.IsAdmin)
-            Nav.NavigateTo("/auth/login");
-    }
+    /// <summary>
+    /// Deprecated.
+    /// </summary>
+    //protected override void OnInitialized();
 
     protected override async Task OnInitializedAsync()
     {
-        if (!Auth.IsAdmin) return;
+        if (!Auth.IsAuthenticated)
+        {
+            Nav.NavigateTo("/auth/login", replace: true);
+            return;
+        }
         await LoadCoursesAsync();
         if (Status == "created")
         {
